@@ -1,20 +1,54 @@
 <html>
 <head>
-<script type="text/javascript" src="main/scripts/jquery-3.3.1.min.js">
+<!--<script type="text/javascript" src="main/scripts/jquery-3.3.1.min.js">-->
 </script>
 	
 <script> 
-var Playes = function(name){
+
+var Player = function(name){
 	this.name = name;
 	this.age = '18';
 	this.health = '100%';
-	this.inventory = [];
+	this.bodyStatus = 'Стоит'
+	
+	function Actions(id,name) {
+		this.id = id;
+		this.name = name;
+		this.available = true;
+		this.activate = function () {
+			this.available = true;
+		}
+		this.deactivate = function () {
+			this.available = false;
+		}
+		
+	}
+	/*actionsArray[0] = new Actions (1,'Прилечь');;
+	this.lie = 
+	this.sit = new Actions (2,'Присесть');
+	this.getUp = new Actions (3,'Встать');
+	this.jump = new Actions (4,'Подпрыгнуть');
+	this.open = new Actions (5,'Открыть');
+	this.take = new Actions (6,'Взять');
+	this.insert = new Actions (7,'Вставить');
+	this.inspect = new Actions (8,'Осмотреть');*/
+	this.actionsArray = [];
+	this.actionsArray[1] = new Actions ('1','Прилечь');
+	this.actionsArray[2] = new Actions ('2','Присесть');
+	this.actionsArray[3] = new Actions ('3','Встать');
+	this.actionsArray[4] = new Actions ('4','Подпрыгнуть');
+	this.actionsArray[5] = new Actions ('5','Открыть');
+	this.actionsArray[6] = new Actions ('6','Взять');
+	this.actionsArray[7] = new Actions ('7','Вставить');
+	this.actionsArray[8] = new Actions ('8','Осмотреть');
+	
+
 }
 
 var Room = function(title, adress) {
 	this.title = title;
 	this.adress = adress;
-	this.img = 'n/a';
+	this.img = 'none';
 	this.text = 'Нет текста';
 	this.setText = function(text) {
 		this.text = text;
@@ -22,23 +56,34 @@ var Room = function(title, adress) {
 }
 
 
-alert(main_w.id);
+
 function new_game() {
 	document.getElementById("main-menu").style.display = "none";
+	
+	//Создаем нового игрока
+	
+	//Запускаем игрока в комнату
 	first_room();
 }
 
+
+
+//Создаем комнату
 function first_room() {
-	var room_test = new Room('Клетка Сыча','Этаж 522, сектор Г');
 	var player = new Player('Сычев');
-		
+	//Наполняем комнату
+	var room_test = new Room('Клетка Сыча','Этаж 522, сектор Г');
+	room_test.setText('Вы в пустой комнате. Стальная дверь без ручки без замка. Обычное пластиковое окно с подоконником, но за окном - кирпичная кладка. На полу ковер.');
+	
+
+	//наполняем интерфейс
 	var main_w = document.getElementById('main-div');
 	
 	var room_title = document.createElement('div');
 	room_title.id = 'room_title';
 	room_title.className +=" pre";
 	main_w.appendChild(room_title);
-	room_title.innerHTML = room_test.title + ' ' + room_test.adress;
+	room_title.innerHTML = room_test.title + ' : ' + room_test.adress;
 	
 	var room_image = document.createElement('div');
 	room_image.id = 'room_image';
@@ -50,15 +95,23 @@ function first_room() {
 	room_text.id = 'room_text';
 	room_text.className +=" pre";
 	main_w.appendChild(room_text);
-	room_text.innerHTML = room_test.setText('Вставленный текст');
+	room_text.innerHTML = room_test.text;
 	
 	var room_actions = document.createElement('div');
 	room_actions.id = 'room_actions';
 	room_actions.className +=" pre";
 	main_w.appendChild(room_actions);
-	room_actions.innerHTML = "Действия";
+	//room_actions.innerHTML = "Действия";
 	
-	
+	for (i=1;i<player.actionsArray.length;i++) {
+		if (player.actionsArray[i].available) {
+			var button = document.createElement('span');
+			button.id = player.actionsArray[i].id;
+			button.className = "pre";
+			room_actions.appendChild(button);
+			button.innerHTML = i + ' ' + player.actionsArray[i].name;
+		}
+	}
 }
 
 
