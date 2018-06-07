@@ -4,10 +4,21 @@
 </script>
 	
 <script> 
+var Playes = function(name){
+	this.name = name;
+	this.age = '18';
+	this.health = '100%';
+	this.inventory = [];
+}
+
 var Room = function(title, adress) {
 	this.title = title;
 	this.adress = adress;
-	img: 'n/a';
+	this.img = 'n/a';
+	this.text = 'Нет текста';
+	this.setText = function(text) {
+		this.text = text;
+	}
 }
 
 
@@ -19,11 +30,11 @@ function new_game() {
 
 function first_room() {
 	var room_test = new Room('Клетка Сыча','Этаж 522, сектор Г');
-	
-	var room_title = document.createElement('div');
-	
+	var player = new Player('Сычев');
+		
 	var main_w = document.getElementById('main-div');
 	
+	var room_title = document.createElement('div');
 	room_title.id = 'room_title';
 	room_title.className +=" pre";
 	main_w.appendChild(room_title);
@@ -39,13 +50,14 @@ function first_room() {
 	room_text.id = 'room_text';
 	room_text.className +=" pre";
 	main_w.appendChild(room_text);
-	room_text.innerHTML = 'Тестовый текст'
+	room_text.innerHTML = room_test.setText('Вставленный текст')
 	
 	var room_actions = document.createElement('div');
 	room_actions.id = 'room_actions';
 	room_actions.className +=" pre";
 	main_w.appendChild(room_actions);
 	room_actions.innerHTML = "Действия";
+	
 	
 }
 
