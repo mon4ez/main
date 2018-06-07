@@ -40,11 +40,13 @@ margin: auto;
 	text-align: center;
 }
 #actualText {
+	display: table-cell; 
+	vertical-align: middle;
 	height:200px;
 	width:600px;
 	position:absolute;
 	left:0px;
-	text-align: center;
+	/*text-align: center;*/
 }
 #playerStatus {
 	height:200px;
