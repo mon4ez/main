@@ -1,12 +1,65 @@
+body {
+background-color: #015367;
+}
+
 #main-div {
 background-color: #002920;
 color: white;
 position:absolute;
 width: 1200px;
-height: 600px;
+height: 640px;
 top: 0; left: 0; bottom: 0; right: 0;
 margin: auto;
 }
-body {
-background-color: #015367;
+
+#main-menu {
+	top: 50%; left: 0; bottom: 0; right: 0;
+	margin: auto;
+	margin-top:-150px;
+	position: absolute;
+	text-align: center;
+	width: 300px;
+	height: 300px;
+}
+
+#room_title {
+	height:40px;
+	width:100%;
+	position:relative;
+	text-align: center;
+}
+#room_image {
+	height:200px;
+	width:100%;
+	position:relative;
+}
+#room_text {
+	height:200px;
+	width:100%;
+	position:relative;
+}
+#room_actions {
+	height:200px;
+	width:100%;
+	position:relative;
+}
+
+.pre {
+	border: 1px solid black;
+	background-color: white;
+	color:black;
+}
+
+.a_button:link {
+    text-decoration: none;
+}
+.a_button:visited {
+	text-decoration: none; 
+}
+.a_button:active { 
+	text-decoration: none; 
+}
+.a_button:hover {
+	text-decoration: none; 
+	color: red;	
 }
