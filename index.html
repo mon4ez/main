@@ -9,7 +9,7 @@ var Player = function(name){
 	this.name = name;
 	this.age = '18';
 	this.health = '100%';
-	this.bodyStatus = 'Стоит'
+	this.bodyStatus = 'Стоит';
 	
 	function Actions(id,name) {
 		this.id = id;
@@ -23,15 +23,6 @@ var Player = function(name){
 		}
 		
 	}
-	/*actionsArray[0] = new Actions (1,'Прилечь');;
-	this.lie = 
-	this.sit = new Actions (2,'Присесть');
-	this.getUp = new Actions (3,'Встать');
-	this.jump = new Actions (4,'Подпрыгнуть');
-	this.open = new Actions (5,'Открыть');
-	this.take = new Actions (6,'Взять');
-	this.insert = new Actions (7,'Вставить');
-	this.inspect = new Actions (8,'Осмотреть');*/
 	this.actionsArray = [];
 	this.actionsArray[0] = new Actions ('0','Прилечь');
 	this.actionsArray[1] = new Actions ('1','Присесть');
@@ -89,11 +80,21 @@ function first_room() {
 	main_w.appendChild(room_image);
 	room_image.innerHTML = '<img src="' + room_test.img + '">'
 	
-	var room_text = document.createElement('div');
-	room_text.id = 'room_text';
-	room_text.className +=" pre";
-	main_w.appendChild(room_text);
-	room_text.innerHTML = room_test.text;
+	var room_textArea = document.createElement('div');
+	room_textArea.id = 'room_textArea';
+	room_textArea.className +=" pre";
+	main_w.appendChild(room_textArea);
+	
+	var actualText = document.createElement('div');
+	actualText.id = 'actualText';
+	actualText.className +=" pre";
+	actualText.innerHTML = room_test.text;
+	room_textArea.appendChild(actualText);
+	var playerStatus = document.createElement('div');
+	playerStatus.id = 'playerStatus';
+	playerStatus.className +=" pre";
+	playerStatus.innerHTML = "Здоровье: " + player.health + "<br>" + "Сейчас: " + player.bodyStatus;
+	room_textArea.appendChild(playerStatus);
 	
 	var room_actions = document.createElement('div');
 	room_actions.id = 'room_actions';
@@ -107,17 +108,17 @@ function first_room() {
 		for (i=0;i<player.actionsArray.length;i++) {
 			if (player.actionsArray[i].available == true) {
 				var button = document.createElement('div');
-				button.id = player.actionsArray[i].id;
+				button.id = 'action'+player.actionsArray[i].id;
 				button.className = "button pre";
 				button.style.position = "absolute";
 				button.style.height = "25px";
 				button.style.width = "140px";
 				if (i % 2) {
-					button.style.left = "5px";
+					button.style.left = "150px";
 					button.style.top = (i-1) * 20 + 4 + 'px';
 				}
 				else {
-					button.style.left = "150px";
+					button.style.left = "5px";
 					button.style.top = i * 20 + 4 + 'px';
 				}
 				
@@ -128,7 +129,20 @@ function first_room() {
 		}
 	}
 	check_actions();
-	//document.getElementById('test_but').onclick=function()
+	function lie () {
+		player.bodyStatus = 'Лежит';
+		playerStatus.innerHTML = "Здоровье: " + player.health + "<br>" + "Сейчас: " + player.bodyStatus;
+	}
+	function getUp() {
+		player.bodyStatus = 'Стоит';
+		playerStatus.innerHTML = "Здоровье: " + player.health + "<br>" + "Сейчас: " + player.bodyStatus;
+	}
+	
+	
+	document.getElementById('action'+player.actionsArray[0].id).onclick=function(){ lie(); };
+	document.getElementById('action'+player.actionsArray[2].id).onclick=function(){ getUp(); };
+	//document.getElementById('action'+player.actionsArray[0].id).style.color = 'red';
+	
 	
 }
 

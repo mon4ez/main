@@ -33,10 +33,25 @@ margin: auto;
 	width:100%;
 	position:relative;
 }
-#room_text {
+#room_textArea {
 	height:200px;
 	width:100%;
 	position:relative;
+	text-align: center;
+}
+#actualText {
+	height:200px;
+	width:600px;
+	position:absolute;
+	left:0px;
+	text-align: center;
+}
+#playerStatus {
+	height:200px;
+	width:200px;
+	position:absolute;
+	top:0px;
+	right:0px;
 	text-align: center;
 }
 #room_actions {
