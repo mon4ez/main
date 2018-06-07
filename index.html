@@ -93,7 +93,7 @@ function first_room() {
 	var playerStatus = document.createElement('div');
 	playerStatus.id = 'playerStatus';
 	playerStatus.className +=" pre";
-	playerStatus.innerHTML = "Здоровье: " + player.health + "<br>" + "Сейчас: " + player.bodyStatus;
+	playerStatus.innerHTML = player.name + "<br>Здоровье: " + player.health + "<br>" + "Сейчас: " + player.bodyStatus;
 	room_textArea.appendChild(playerStatus);
 	
 	var room_actions = document.createElement('div');
