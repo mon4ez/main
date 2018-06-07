@@ -131,11 +131,11 @@ function first_room() {
 	check_actions();
 	function lie () {
 		player.bodyStatus = 'Лежит';
-		playerStatus.innerHTML = "Здоровье: " + player.health + "<br>" + "Сейчас: " + player.bodyStatus;
+		playerStatus.innerHTML = player.name + "<br>Здоровье: " + player.health + "<br>" + "Сейчас: " + player.bodyStatus;
 	}
 	function getUp() {
 		player.bodyStatus = 'Стоит';
-		playerStatus.innerHTML = "Здоровье: " + player.health + "<br>" + "Сейчас: " + player.bodyStatus;
+		playerStatus.innerHTML = player.name + "<br>Здоровье: " + player.health + "<br>" + "Сейчас: " + player.bodyStatus;
 	}
 	
 	
