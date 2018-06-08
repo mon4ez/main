@@ -228,14 +228,26 @@ function first_room() {
 			addText("Вы встали");
 		}
 	}
+	var sitcount =0;
 	function sit() {
+		sitcount
 		if (player.currentBodyStatus == 1) {
-			addText("Вы уже сидите");
+			if (sitcount == 2) {
+				addText("Фуфлыжно сидите!");
+			}
+			else if (sitcount == 3) {
+				addText("Как фуфел!!!");
+			}
+			else {
+				addText("Вы уже сидите");
+			}
+			sitcount++;
 		}
 		else {
 			player.currentBodyStatus = 1;
 			bodyPlayerStatus.innerHTML = player.bodyStatus[1];
 			addText("Вы сели");
+			sitcount = 1;
 		}
 	}
 	function jump() {
