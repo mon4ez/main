@@ -12,7 +12,8 @@ var Player = function(name){
 	this.getHealth = function() {
 		return this.health + "%";
 	}
-	this.bodyStatus = 'Стоит';
+	this.bodyStatus = ['Стоит','Сидит','Лежит'];
+	this.currentBodyStatus = 0;
 	
 	function Actions(id,name) {
 		this.id = id;
@@ -73,7 +74,7 @@ function first_room() {
 	var player = new Player('Сычев');
 	//Наполняем комнату
 	var room_test = new Room('Клетка Сыча','Этаж 522, сектор Г');
-	room_test.setText('Вы в пустой комнате. Стальная дверь без ручки без замка. Обычное пластиковое окно с подоконником, но за окном - кирпичная кладка. На полу ковер.');
+	room_test.setText('Вы в пустой комнате. Стальная дверь без ручки без замка. Обычное пластиковое окно с подоконником, но за окном - кирпичная кладка. На полу ковер.<br>');
 	
 
 	//наполняем интерфейс
@@ -101,6 +102,7 @@ function first_room() {
 		actualText.className +=" pre";
 		actualText.innerHTML = room_test.text;
 		room_textArea.appendChild(actualText);
+		
 		var playerStatus = document.createElement('div');
 		playerStatus.id = 'playerStatus';
 		playerStatus.className +=" pre";
@@ -121,7 +123,7 @@ function first_room() {
 			var bodyPlayerStatus = document.createElement('div');
 			bodyPlayerStatus.id = 'bodyPlayerStatus';
 			bodyPlayerStatus.className = "pre";
-			bodyPlayerStatus.innerHTML = player.bodyStatus;
+			bodyPlayerStatus.innerHTML = player.bodyStatus[0];
 			playerStatus.appendChild(bodyPlayerStatus);
 	
 	var room_actions = document.createElement('div');
@@ -158,16 +160,37 @@ function first_room() {
 	}
 	check_actions();
 	function lie() {
-		player.bodyStatus = 'Лежит';
-		bodyPlayerStatus.innerHTML = player.bodyStatus;
+		if (player.currentBodyStatus == 2) {
+			actualText.innerHTML += "@<br>Вы уже лежите<br>"
+		}
+		else {
+			player.currentBodyStatus = 2;
+			bodyPlayerStatus.innerHTML = player.bodyStatus[2];
+			actualText.innerHTML += "@<br>Вы легли<br>"
+		}
+		actualText.scrollTop = actualText.scrollHeight;
 	}
 	function getUp() {
-		player.bodyStatus = 'Стоит';
-		bodyPlayerStatus.innerHTML = player.bodyStatus;
+		if (player.currentBodyStatus == 0) {
+			actualText.innerHTML += "@<br>Вы уже стоите<br>"
+		}
+		else {
+			player.currentBodyStatus = 0;
+			bodyPlayerStatus.innerHTML = player.bodyStatus[0];
+			actualText.innerHTML += "@<br>Вы встали<br>"
+		}
+		actualText.scrollTop = actualText.scrollHeight;
 	}
 	function sit() {
-		player.bodyStatus = 'Сидит';
-		bodyPlayerStatus.innerHTML = player.bodyStatus;
+		if (player.currentBodyStatus == 1) {
+			actualText.innerHTML += "@<br>Вы уже сидите<br>"
+		}
+		else {
+			player.currentBodyStatus = 1;
+			bodyPlayerStatus.innerHTML = player.bodyStatus[1];
+			actualText.innerHTML += "@<br>Вы сели<br>"
+		}
+		actualText.scrollTop = actualText.scrollHeight;
 	}
 	
 	

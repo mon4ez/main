@@ -46,6 +46,7 @@ margin: auto;
 	width:600px;
 	position:absolute;
 	left:0px;
+	overflow-y: auto;
 	/*text-align: center;*/
 }
 #playerStatus {
