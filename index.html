@@ -61,6 +61,7 @@ var Room = function(title, adress, startText) {
 function ActiveObject (id,name,active) {
 	this.id = id;
 	this.name = name;
+	this.available;
 	if (typeof active != 'undefined') {
 		this.available = active;
 	}
@@ -289,7 +290,9 @@ function first_room() {
 	//Распихиваем объектры для взаимодействия
 	room_test.activeObjectsArray[0] = new ActiveObject(0,'дверь',true);
 	room_test.activeObjectsArray[1] = new ActiveObject(1,'окно',true);
-	room_test.activeObjectsArray[2] = new ActiveObject(2,'записка',false);
+	room_test.activeObjectsArray[2] = new ActiveObject(2,'подоконник',false);
+	room_test.activeObjectsArray[3] = new ActiveObject(3,'записка',false);
+
 	
 	//расставляем кнопки объектов в комнате
 	function check_roomObjects () {
@@ -332,7 +335,44 @@ function first_room() {
 			addText('Что бы вставить?');
 		}
 	}
+	function window() {
+		if (player.open.flag == true) {
+			addText('Окно закрыто');
+		}
+		if (player.take.flag == true) {
+			addText('Ничего не выйдет');
+		}
+		if (player.inspect.flag == true) {
+			addText('За окном кирпичная кладка. Стекло треснуто.');
+			room_test.activeObjectsArray[2].available = true;
+			check_roomObjects();
+			document.getElementById('actionRoom'+room_test.activeObjectsArray[2].id).onclick=function(){ window_down(); };
+		}
+		if (player.insert.flag == true) {
+			addText('Что бы вставить?');
+		}
+	}
+	function window_down() {
+		if (player.open.flag == true) {
+			addText('Что открыть?');
+		}
+		if (player.take.flag == true) {
+			addText('Нечего взять');
+		}
+		if (player.inspect.flag == true) {
+			if (player.currentBodyStatus == 1) {
+				addText('Под подоконником в монтажной пене торчит карточка');
+			}
+			else {
+				addText('На подоконнике следы кровавых пальцев.');
+			}
+		}
+		if (player.insert.flag == true) {
+			addText('Что бы вставить?');
+		}
+	}
 	document.getElementById('actionRoom'+room_test.activeObjectsArray[0].id).onclick=function(){ door(); };
+	document.getElementById('actionRoom'+room_test.activeObjectsArray[1].id).onclick=function(){ window(); };
 	
 }
 
