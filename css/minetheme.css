@@ -1,6 +1,11 @@
 body {
 background-color: #015367;
 }
+p {
+line-height: 0.9em;
+margin: 0;
+padding: 0;
+}
 
 #main-div {
 background-color: #002920;
@@ -62,6 +67,17 @@ margin: auto;
 	width:100%;
 	position:relative;
 }
+#playerActions {
+	height:200px;
+	width:300px;
+	position:absolute;
+}
+#roomActions {
+	height:200px;
+	width:300px;
+	position:absolute;
+	left:305px;
+}
 
 .pre {
 	border: 1px solid black;
@@ -73,6 +89,13 @@ margin: auto;
 	padding: 4px;
 	cursor: pointer;
 	text-align: center;
+}
+.button_flaged {
+	font-size: 15pt;
+	padding: 4px;
+	cursor: pointer;
+	text-align: center;
+	background-color: #5d0000;
 }
 .button:hover {
 	background-color: gray;

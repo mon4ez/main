@@ -25,7 +25,7 @@ var Player = function(name){
 		this.deactivate = function () {
 			this.available = false;
 		}
-		
+		this.flag = false;
 	}
 	this.actionsArray = [];
 	this.actionsArray[0] = new Actions ('0','Прилечь');
@@ -36,23 +36,42 @@ var Player = function(name){
 	this.getup = this.actionsArray[2];
 	this.actionsArray[3] = new Actions ('3','Подпрыгнуть');
 	this.jump = this.actionsArray[3];
-	this.actionsArray[4] = new Actions ('4','Открыть');
+	this.actionsArray[4] = new Actions ('4','Открыть+1');
 	this.open = this.actionsArray[4];
-	this.actionsArray[5] = new Actions ('5','Взять');
+	this.actionsArray[5] = new Actions ('5','Взять+1');
 	this.take = this.actionsArray[5];
-	this.actionsArray[6] = new Actions ('6','Вставить');
-	this.insert = this.actionsArray[6];
-	this.actionsArray[7] = new Actions ('7','Осмотреть');
-	this.inspect = this.actionsArray[7];
+	this.actionsArray[6] = new Actions ('6','Осмотреть+1');
+	this.inspect = this.actionsArray[6];
+	this.actionsArray[7] = new Actions ('7','Вставить+2');
+	this.insert = this.actionsArray[7];
+	
+
 }
 
-var Room = function(title, adress) {
+var Room = function(title, adress, startText) {
 	this.title = title;
 	this.adress = adress;
 	this.img = 'none';
-	this.text = 'Нет текста';
+	this.text = startText;
 	this.setText = function(text) {
 		this.text = text;
+	}
+	this.activeObjectsArray = [];
+}
+function ActiveObject (id,name,active) {
+	this.id = id;
+	this.name = name;
+	if (typeof active != 'undefined') {
+		this.available = active;
+	}
+	else {
+		this.available = true;
+	}
+	this.activate = function () {
+		this.available = true;
+	}
+	this.deactivate = function () {
+		this.available = false;
 	}
 }
 
@@ -73,9 +92,7 @@ function new_game() {
 function first_room() {
 	var player = new Player('Сычев');
 	//Наполняем комнату
-	var room_test = new Room('Клетка Сыча','Этаж 522, сектор Г');
-	room_test.setText('Вы в пустой комнате. Стальная дверь без ручки без замка. Обычное пластиковое окно с подоконником, но за окном - кирпичная кладка. На полу ковер.<br>');
-	
+	var room_test = new Room('Клетка Сыча','Этаж 522, сектор Г', 'Вы в пустой комнате. Стальная дверь без ручки без замка. Обычное пластиковое окно с подоконником, но за окном - кирпичная кладка. На полу ковер.<br>');
 
 	//наполняем интерфейс
 	var main_w = document.getElementById('main-div');
@@ -130,11 +147,21 @@ function first_room() {
 	room_actions.id = 'room_actions';
 	room_actions.className +=" pre";
 	main_w.appendChild(room_actions);
+		
+		var playerActions = document.createElement('div');
+		playerActions.id = 'playerActions';
+		playerActions.className +=" pre";
+		room_actions.appendChild(playerActions);
+		
+		var roomActions = document.createElement('div');
+		roomActions.id = 'roomActions';
+		roomActions.className +=" pre";
+		room_actions.appendChild(roomActions);
 
 	
-	//распихиваем активные кнопки
+	//распихиваем действия игрока по кнопкам
 	function check_actions() {
-		room_actions.innerHTML = '';
+		playerActions.innerHTML = '';
 		for (i=0;i<player.actionsArray.length;i++) {
 			if (player.actionsArray[i].available == true) {
 				var button = document.createElement('div');
@@ -151,8 +178,7 @@ function first_room() {
 					button.style.left = "5px";
 					button.style.top = i * 20 + 4 + 'px';
 				}
-				
-				room_actions.appendChild(button);
+				playerActions.appendChild(button);
 				button.innerHTML = player.actionsArray[i].name;
 				//if (i % 2) room_actions.innerHTML += '<br>';
 			}
@@ -161,45 +187,107 @@ function first_room() {
 	check_actions();
 	function lie() {
 		if (player.currentBodyStatus == 2) {
-			actualText.innerHTML += "@<br>Вы уже лежите<br>"
+			actualText.innerHTML += "@<p>Вы уже лежите</p>"
 		}
 		else {
 			player.currentBodyStatus = 2;
 			bodyPlayerStatus.innerHTML = player.bodyStatus[2];
-			actualText.innerHTML += "@<br>Вы легли<br>"
+			actualText.innerHTML += "@<p>Вы легли</p>"
 		}
 		actualText.scrollTop = actualText.scrollHeight;
 	}
 	function getUp() {
 		if (player.currentBodyStatus == 0) {
-			actualText.innerHTML += "@<br>Вы уже стоите<br>"
+			actualText.innerHTML += "@<p>Вы уже стоите</p>"
 		}
 		else {
 			player.currentBodyStatus = 0;
 			bodyPlayerStatus.innerHTML = player.bodyStatus[0];
-			actualText.innerHTML += "@<br>Вы встали<br>"
+			actualText.innerHTML += "@<p>Вы встали</p>"
 		}
 		actualText.scrollTop = actualText.scrollHeight;
 	}
 	function sit() {
 		if (player.currentBodyStatus == 1) {
-			actualText.innerHTML += "@<br>Вы уже сидите<br>"
+			actualText.innerHTML += "@<p>Вы уже сидите</p>"
 		}
 		else {
 			player.currentBodyStatus = 1;
 			bodyPlayerStatus.innerHTML = player.bodyStatus[1];
-			actualText.innerHTML += "@<br>Вы сели<br>"
+			actualText.innerHTML += "@<p>Вы сели</p>"
 		}
 		actualText.scrollTop = actualText.scrollHeight;
 	}
+	function jump() {
+		player.currentBodyStatus = 0;
+		bodyPlayerStatus.innerHTML = player.bodyStatus[0];
+		actualText.innerHTML += "@<p>Вы подпрыгнули. Ничего не произошло.</p>"
+		actualText.scrollTop = actualText.scrollHeight;
+	}
 	
+	
+	function use(action_id,elem) {
+		for (i=0;i<player.actionsArray.length;i++) {
+		var tflag = false;
+			if (player.actionsArray[i].flag == true) {
+				tflag = true;
+			}
+			else {
+				if (player.open.flag == true) {
+				player.open.flag = false;
+				elem.className = "pre button";
+				}
+				else { //склеиваем действия и объекты
+					player.open.flag = true;
+					elem.className = "pre button_flaged";
+				}
+			}
+		}
+	}
 	
 	
 	document.getElementById('action'+player.lie.id).onclick=function(){ lie(); };
 	document.getElementById('action'+player.getup.id).onclick=function(){ getUp(); };
 	document.getElementById('action'+player.sit.id).onclick=function(){ sit(); };
+	document.getElementById('action'+player.jump.id).onclick=function(){ jump(); };
+	document.getElementById('action'+player.open.id).onclick=function(){ use(player.open.id,this); };
 	
+	//Распихиваем объектры для взаимодействия
+	room_test.activeObjectsArray[0] = new ActiveObject(0,'дверь',true);
+	room_test.activeObjectsArray[1] = new ActiveObject(1,'окно',true);
+	room_test.activeObjectsArray[2] = new ActiveObject(2,'записка',false);
 	
+	//расставляем кнопки объектов в комнате
+	function check_roomObjects () {
+		roomActions.innerHTML = '';
+		for (i=0;i<room_test.activeObjectsArray.length;i++) {
+			if (room_test.activeObjectsArray[i].available == true) {
+				var button = document.createElement('div');
+				button.id = 'actionRoom'+room_test.activeObjectsArray[i].id;
+				button.className = "button pre";
+				button.style.position = "absolute";
+				button.style.height = "25px";
+				button.style.width = "140px";
+				if (i % 2) {
+					button.style.left = "150px";
+					button.style.top = (i-1) * 20 + 4 + 'px';
+				}
+				else {
+					button.style.left = "5px";
+					button.style.top = i * 20 + 4 + 'px';
+				}
+				
+				roomActions.appendChild(button);
+				button.innerHTML = room_test.activeObjectsArray[i].name;
+			}
+		}
+	}
+	check_roomObjects();
+	
+	function door() {
+		if 
+	}
+	document.getElementById('actionRoom'+room_test.activeObjectsArray[0]).onclick=function(){ door(); };
 	
 }
 
