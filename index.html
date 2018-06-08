@@ -225,32 +225,64 @@ function first_room() {
 		actualText.scrollTop = actualText.scrollHeight;
 	}
 	
-	
+	//активируем действия для объектов
 	function use(action_id,elem) {
-		for (i=0;i<player.actionsArray.length;i++) {
-		var tflag = false;
-			if (player.actionsArray[i].flag == true) {
-				tflag = true;
+		switch (action_id) {
+		case '4':
+			player.open.flag = true;
+			player.take.flag = false;
+			player.inspect.flag = false;
+			player.insert.flag = false;
+			break;
+		case '5':
+			player.open.flag = false;
+			player.take.flag = true;
+			player.inspect.flag = false;
+			player.insert.flag = false;
+			break;
+		case '6':
+			player.open.flag = false;
+			player.take.flag = false;
+			player.inspect.flag = true;
+			player.insert.flag = false;
+			break;
+		case '7':
+			player.open.flag = false;
+			player.take.flag = false;
+			player.inspect.flag = false;
+			player.insert.flag = true;
+			break;
+		} 
+		//красим только активированное действие			
+		elements = document.getElementsByClassName('button_flaged')
+		if (elem.className == "pre button_flaged") {
+			for (i=0;i<elements.length;i++) {
+				elements[i].className = "pre button";
 			}
-			else {
-				if (player.open.flag == true) {
-				player.open.flag = false;
-				elem.className = "pre button";
-				}
-				else { //склеиваем действия и объекты
-					player.open.flag = true;
-					elem.className = "pre button_flaged";
-				}
-			}
+			player.open.flag = false;
+			player.take.flag = false;
+			player.inspect.flag = false;
+			player.insert.flag = false;
 		}
+		else {
+			//alert(elem.className);
+			for (i=0;i<elements.length;i++) {
+				elements[i].className = "pre button";
+			}
+			elem.className = "pre button_flaged";
+			
+		}
+		console.log(player.open.flag +' 1'+	player.take.flag + player.inspect.flag + player.insert.flag);
 	}
-	
 	
 	document.getElementById('action'+player.lie.id).onclick=function(){ lie(); };
 	document.getElementById('action'+player.getup.id).onclick=function(){ getUp(); };
 	document.getElementById('action'+player.sit.id).onclick=function(){ sit(); };
 	document.getElementById('action'+player.jump.id).onclick=function(){ jump(); };
 	document.getElementById('action'+player.open.id).onclick=function(){ use(player.open.id,this); };
+	document.getElementById('action'+player.take.id).onclick=function(){ use(player.take.id,this); };
+	document.getElementById('action'+player.inspect.id).onclick=function(){ use(player.inspect.id,this); };
+	document.getElementById('action'+player.insert.id).onclick=function(){ use(player.insert.id,this); };
 	
 	//Распихиваем объектры для взаимодействия
 	room_test.activeObjectsArray[0] = new ActiveObject(0,'дверь',true);
@@ -285,9 +317,9 @@ function first_room() {
 	check_roomObjects();
 	
 	function door() {
-		if 
+		//alert('дверь');
 	}
-	document.getElementById('actionRoom'+room_test.activeObjectsArray[0]).onclick=function(){ door(); };
+	document.getElementById('actionRoom'+room_test.activeObjectsArray[0].id).onclick=function(){ door(); };
 	
 }
 
