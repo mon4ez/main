@@ -96,8 +96,8 @@ margin: auto;
 }
 
 .pre {
-	border: 1px solid black;
-	color:black;
+	/*border: 1px solid black;
+	color:black;*/
 }
 .button {
 	font-size: 15pt;
@@ -105,6 +105,9 @@ margin: auto;
 	cursor: pointer;
 	text-align: center;
 	background-color: #ffffff;
+	color: black;
+	border-radius: 5px;
+	border: 1px solid red;
 }
 .button_flaged {
 	font-size: 15pt;
@@ -112,6 +115,9 @@ margin: auto;
 	cursor: pointer;
 	text-align: center;
 	background-color: #5d0000;
+	color: black;
+	border: 1px solid red;
+	border-radius: 5px;
 }
 .button:hover {
 	background-color: gray;
