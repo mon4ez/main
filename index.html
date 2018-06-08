@@ -75,7 +75,10 @@ function ActiveObject (id,name,active) {
 	}
 }
 
-
+//функция обновления текста
+function addText (text) {
+	actualText.innerHTML += '@<p>'+text+'</p>';
+}
 
 function new_game() {
 	document.getElementById("main-menu").style.display = "none";
@@ -272,7 +275,6 @@ function first_room() {
 			elem.className = "pre button_flaged";
 			
 		}
-		console.log(player.open.flag +' 1'+	player.take.flag + player.inspect.flag + player.insert.flag);
 	}
 	
 	document.getElementById('action'+player.lie.id).onclick=function(){ lie(); };
@@ -317,7 +319,9 @@ function first_room() {
 	check_roomObjects();
 	
 	function door() {
-		//alert('дверь');
+		if (player.open.flag == true) {
+			addText('Дверь заперта');
+		}
 	}
 	document.getElementById('actionRoom'+room_test.activeObjectsArray[0].id).onclick=function(){ door(); };
 	
