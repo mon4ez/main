@@ -79,6 +79,7 @@ function ActiveObject (id,name,active) {
 //функция обновления текста
 function addText (text) {
 	actualText.innerHTML += '@<p>'+text+'</p>';
+	actualText.scrollTop = actualText.scrollHeight;
 }
 
 function new_game() {
@@ -196,37 +197,33 @@ function first_room() {
 		else {
 			player.currentBodyStatus = 2;
 			bodyPlayerStatus.innerHTML = player.bodyStatus[2];
-			actualText.innerHTML += "@<p>Вы легли</p>"
+			addText("Вы легли");
 		}
-		actualText.scrollTop = actualText.scrollHeight;
 	}
 	function getUp() {
 		if (player.currentBodyStatus == 0) {
-			actualText.innerHTML += "@<p>Вы уже стоите</p>"
+			addText("Вы уже стоите");
 		}
 		else {
 			player.currentBodyStatus = 0;
 			bodyPlayerStatus.innerHTML = player.bodyStatus[0];
-			actualText.innerHTML += "@<p>Вы встали</p>"
+			addText("Вы встали");
 		}
-		actualText.scrollTop = actualText.scrollHeight;
 	}
 	function sit() {
 		if (player.currentBodyStatus == 1) {
-			actualText.innerHTML += "@<p>Вы уже сидите</p>"
+			addText("Вы уже сидите");
 		}
 		else {
 			player.currentBodyStatus = 1;
 			bodyPlayerStatus.innerHTML = player.bodyStatus[1];
-			actualText.innerHTML += "@<p>Вы сели</p>"
+			addText("Вы сели");
 		}
-		actualText.scrollTop = actualText.scrollHeight;
 	}
 	function jump() {
 		player.currentBodyStatus = 0;
 		bodyPlayerStatus.innerHTML = player.bodyStatus[0];
-		actualText.innerHTML += "@<p>Вы подпрыгнули. Ничего не произошло.</p>"
-		actualText.scrollTop = actualText.scrollHeight;
+		addText("Вы подпрыгнули. Ничего не произошло");
 	}
 	
 	//активируем действия для объектов
