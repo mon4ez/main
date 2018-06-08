@@ -127,17 +127,20 @@ function first_room() {
 	room_textArea.className +=" pre";
 	room_image.appendChild(room_textArea);
 	
-		var actualText = document.createElement('div');
-		actualText.id = 'actualText_back';
-		//actualText.className +=" pre";
-		//actualText.innerHTML = room_test.text;
-		room_textArea.appendChild(actualText);
+		var actualText_back = document.createElement('div');
+		actualText_back.id = 'actualText_back';
+		room_textArea.appendChild(actualText_back);
 		
 		var actualText = document.createElement('div');
 		actualText.id = 'actualText';
 		actualText.className +=" pre";
 		actualText.innerHTML = room_test.text;
 		room_textArea.appendChild(actualText);
+		
+		var playerStatus_back = document.createElement('div');
+		playerStatus_back.id = 'playerStatus_back';
+		playerStatus_back.className +=" pre";
+		room_textArea.appendChild(playerStatus_back);
 		
 		var playerStatus = document.createElement('div');
 		playerStatus.id = 'playerStatus';
