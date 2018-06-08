@@ -54,19 +54,20 @@ margin: auto;
 	display: table-cell; 
 	vertical-align: middle;
 	height:200px;
-	width:600px;
+	width:930px;
 	position:absolute;
-	left:0px;
+	left:4px;
 	overflow-y: auto;
 	font-size: 14pt;
 	font-weight:bold;
+	color:black;
 	/*text-align: center;*/
 }
 #actualText_back {
 	height:200px;
-	width:600px;
+	width:930px;
 	position:absolute;
-	left:0px;
+	left:4px;
 	background-color:white;
 	opacity: 0.5;
 }
@@ -77,6 +78,7 @@ margin: auto;
 	top:0px;
 	right:0px;
 	text-align: center;
+	border: 2px solid black;
 }
 #room_actions {
 	height:200px;
@@ -85,14 +87,14 @@ margin: auto;
 }
 #playerActions {
 	height:200px;
-	width:300px;
+	width:320px;
 	position:absolute;
 }
 #roomActions {
 	height:200px;
 	width:300px;
 	position:absolute;
-	left:305px;
+	left:325px;
 }
 
 .pre {
@@ -104,7 +106,7 @@ margin: auto;
 	padding: 4px;
 	cursor: pointer;
 	text-align: center;
-	background-color: #ffffff;
+	background-color: #46485E;
 	color: black;
 	border-radius: 5px;
 	border: 1px solid red;

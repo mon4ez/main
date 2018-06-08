@@ -10,7 +10,7 @@ var Player = function(name){
 	this.age = '18';
 	this.health = 100;
 	this.getHealth = function() {
-		return this.health + "%";
+		return "Здоровье:" + this.health + "%";
 	}
 	this.bodyStatus = ['Стоит','Сидит','Лежит'];
 	this.currentBodyStatus = 0;
@@ -190,7 +190,7 @@ function first_room() {
 				button.style.height = "25px";
 				button.style.width = "140px";
 				if (i % 2) {
-					button.style.left = "150px";
+					button.style.left = "160px";
 					button.style.top = (i-1) * 20 + 4 + 'px';
 				}
 				else {
@@ -318,7 +318,7 @@ function first_room() {
 				button.style.height = "25px";
 				button.style.width = "140px";
 				if (i % 2) {
-					button.style.left = "150px";
+					button.style.left = "160px";
 					button.style.top = (i-1) * 20 + 4 + 'px';
 				}
 				else {
@@ -423,7 +423,7 @@ function load_game() {
 
 <div id="main-div">
 	<div id="main-menu" class="pre">
-		<a class="a_button" onClick="new_game()" href="#">Новая игра</a><br>
+		<div class="button" onClick="new_game()">Новая игра</div>
 		<!--<a class="a_button" onClick="load_game()" href="#">Загрузить игру</a>-->
 	</div>
 </div>
