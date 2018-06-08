@@ -103,6 +103,7 @@ function first_room() {
 	room_test.img = 'img/back/lol5.png';
 	//наполняем интерфейс
 	var main_w = document.getElementById('main-div');
+	main_w.style.backgroundImage = backgroundImage = "url("+room_test.img+")";;
 	
 	var room_title = document.createElement('div');
 	room_title.id = 'room_title';
@@ -113,7 +114,7 @@ function first_room() {
 	var room_image = document.createElement('div');
 	room_image.id = 'room_image';
 	//room_image.className +=" pre";
-	room_image.style.backgroundImage = backgroundImage = "url("+room_test.img+")";;
+	
 	main_w.appendChild(room_image);
 	//room_image.innerHTML = '<img src="' + room_test.img + '">'
 	
