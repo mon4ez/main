@@ -8,7 +8,10 @@
 var Player = function(name){
 	this.name = name;
 	this.age = '18';
-	this.health = '100%';
+	this.health = 100;
+	this.getHealth = function() {
+		return this.health + "%";
+	}
 	this.bodyStatus = 'Стоит';
 	
 	function Actions(id,name) {
@@ -25,13 +28,21 @@ var Player = function(name){
 	}
 	this.actionsArray = [];
 	this.actionsArray[0] = new Actions ('0','Прилечь');
+	this.lie = this.actionsArray[0];
 	this.actionsArray[1] = new Actions ('1','Присесть');
+	this.sit = this.actionsArray[1];
 	this.actionsArray[2] = new Actions ('2','Встать');
+	this.getup = this.actionsArray[2];
 	this.actionsArray[3] = new Actions ('3','Подпрыгнуть');
+	this.jump = this.actionsArray[3];
 	this.actionsArray[4] = new Actions ('4','Открыть');
+	this.open = this.actionsArray[4];
 	this.actionsArray[5] = new Actions ('5','Взять');
+	this.take = this.actionsArray[5];
 	this.actionsArray[6] = new Actions ('6','Вставить');
+	this.insert = this.actionsArray[6];
 	this.actionsArray[7] = new Actions ('7','Осмотреть');
+	this.inspect = this.actionsArray[7];
 }
 
 var Room = function(title, adress) {
@@ -85,16 +96,33 @@ function first_room() {
 	room_textArea.className +=" pre";
 	main_w.appendChild(room_textArea);
 	
-	var actualText = document.createElement('div');
-	actualText.id = 'actualText';
-	actualText.className +=" pre";
-	actualText.innerHTML = room_test.text;
-	room_textArea.appendChild(actualText);
-	var playerStatus = document.createElement('div');
-	playerStatus.id = 'playerStatus';
-	playerStatus.className +=" pre";
-	playerStatus.innerHTML = player.name + "<br>Здоровье: " + player.health + "<br>" + "Сейчас: " + player.bodyStatus;
-	room_textArea.appendChild(playerStatus);
+		var actualText = document.createElement('div');
+		actualText.id = 'actualText';
+		actualText.className +=" pre";
+		actualText.innerHTML = room_test.text;
+		room_textArea.appendChild(actualText);
+		var playerStatus = document.createElement('div');
+		playerStatus.id = 'playerStatus';
+		playerStatus.className +=" pre";
+		room_textArea.appendChild(playerStatus);
+			
+			var namePlayerStatus = document.createElement('div');
+			namePlayerStatus.id = 'namePlayerStatus';
+			namePlayerStatus.className = "pre";
+			namePlayerStatus.innerHTML = player.name;
+			playerStatus.appendChild(namePlayerStatus);
+			
+			var healthPlayerStatus = document.createElement('div');
+			healthPlayerStatus.id = 'healthPlayerStatus';
+			healthPlayerStatus.className = "pre";
+			healthPlayerStatus.innerHTML = player.getHealth();
+			playerStatus.appendChild(healthPlayerStatus);
+			
+			var bodyPlayerStatus = document.createElement('div');
+			bodyPlayerStatus.id = 'bodyPlayerStatus';
+			bodyPlayerStatus.className = "pre";
+			bodyPlayerStatus.innerHTML = player.bodyStatus;
+			playerStatus.appendChild(bodyPlayerStatus);
 	
 	var room_actions = document.createElement('div');
 	room_actions.id = 'room_actions';
@@ -129,19 +157,25 @@ function first_room() {
 		}
 	}
 	check_actions();
-	function lie () {
+	function lie() {
 		player.bodyStatus = 'Лежит';
-		playerStatus.innerHTML = player.name + "<br>Здоровье: " + player.health + "<br>" + "Сейчас: " + player.bodyStatus;
+		bodyPlayerStatus.innerHTML = player.bodyStatus;
 	}
 	function getUp() {
 		player.bodyStatus = 'Стоит';
-		playerStatus.innerHTML = player.name + "<br>Здоровье: " + player.health + "<br>" + "Сейчас: " + player.bodyStatus;
+		bodyPlayerStatus.innerHTML = player.bodyStatus;
+	}
+	function sit() {
+		player.bodyStatus = 'Сидит';
+		bodyPlayerStatus.innerHTML = player.bodyStatus;
 	}
 	
 	
-	document.getElementById('action'+player.actionsArray[0].id).onclick=function(){ lie(); };
-	document.getElementById('action'+player.actionsArray[2].id).onclick=function(){ getUp(); };
-	//document.getElementById('action'+player.actionsArray[0].id).style.color = 'red';
+	
+	document.getElementById('action'+player.lie.id).onclick=function(){ lie(); };
+	document.getElementById('action'+player.getup.id).onclick=function(){ getUp(); };
+	document.getElementById('action'+player.sit.id).onclick=function(){ sit(); };
+	
 	
 	
 }
