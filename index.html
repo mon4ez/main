@@ -58,10 +58,12 @@ var Room = function(title, adress, startText) {
 	}
 	this.activeObjectsArray = [];
 }
+
 function ActiveObject (id,name,active) {
 	this.id = id;
 	this.name = name;
 	this.available;
+	this.isUsed = false;
 	if (typeof active != 'undefined') {
 		this.available = active;
 	}
@@ -315,8 +317,12 @@ function first_room() {
 				button.innerHTML = room_test.activeObjectsArray[i].name;
 			}
 		}
+		document.getElementById('actionRoom'+room_test.activeObjectsArray[0].id).onclick=function(){ door(); };
+		document.getElementById('actionRoom'+room_test.activeObjectsArray[1].id).onclick=function(){ window(); };
 	}
 	check_roomObjects();
+	
+	
 	
 	function door() {
 		if (player.open.flag == true) {
@@ -368,8 +374,7 @@ function first_room() {
 			addText('Что бы вставить?');
 		}
 	}
-	document.getElementById('actionRoom'+room_test.activeObjectsArray[0].id).onclick=function(){ door(); };
-	document.getElementById('actionRoom'+room_test.activeObjectsArray[1].id).onclick=function(){ window(); };
+	
 	
 }
 
