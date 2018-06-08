@@ -100,7 +100,7 @@ function first_room() {
 	var player = new Player('Сычев');
 	//Наполняем комнату
 	var room_test = new Room('Клетка Сыча','Этаж 522, сектор Г', 'Вы в пустой комнате. Стальная дверь без ручки без замка. Обычное пластиковое окно с подоконником, но за окном - кирпичная кладка. На полу ковер.<br>');
-
+	room_test.img = 'img/back/lol5.png';
 	//наполняем интерфейс
 	var main_w = document.getElementById('main-div');
 	
@@ -112,15 +112,27 @@ function first_room() {
 	
 	var room_image = document.createElement('div');
 	room_image.id = 'room_image';
-	room_image.className +=" pre";
+	//room_image.className +=" pre";
+	room_image.style.backgroundImage = backgroundImage = "url("+room_test.img+")";;
 	main_w.appendChild(room_image);
-	room_image.innerHTML = '<img src="' + room_test.img + '">'
+	//room_image.innerHTML = '<img src="' + room_test.img + '">'
+	
+	var room_image_padding = document.createElement('div');
+	room_image_padding.id = 'room_image_padding';
+	room_image_padding.className +=" pre";
+	room_image.appendChild(room_image_padding);
 	
 	var room_textArea = document.createElement('div');
 	room_textArea.id = 'room_textArea';
 	room_textArea.className +=" pre";
-	main_w.appendChild(room_textArea);
+	room_image.appendChild(room_textArea);
 	
+		var actualText = document.createElement('div');
+		actualText.id = 'actualText_back';
+		//actualText.className +=" pre";
+		//actualText.innerHTML = room_test.text;
+		room_textArea.appendChild(actualText);
+		
 		var actualText = document.createElement('div');
 		actualText.id = 'actualText';
 		actualText.className +=" pre";
@@ -153,7 +165,7 @@ function first_room() {
 	var room_actions = document.createElement('div');
 	room_actions.id = 'room_actions';
 	room_actions.className +=" pre";
-	main_w.appendChild(room_actions);
+	room_image.appendChild(room_actions);
 		
 		var playerActions = document.createElement('div');
 		playerActions.id = 'playerActions';
@@ -289,8 +301,9 @@ function first_room() {
 	//Распихиваем объектры для взаимодействия
 	room_test.activeObjectsArray[0] = new ActiveObject(0,'дверь',true);
 	room_test.activeObjectsArray[1] = new ActiveObject(1,'окно',true);
-	room_test.activeObjectsArray[2] = new ActiveObject(2,'подоконник',false);
-	room_test.activeObjectsArray[3] = new ActiveObject(3,'записка',false);
+	room_test.activeObjectsArray[2] = new ActiveObject(2,'ковер',true);
+	room_test.activeObjectsArray[3] = new ActiveObject(3,'подоконник',false);
+	room_test.activeObjectsArray[4] = new ActiveObject(4,'записка',false);
 
 	
 	//расставляем кнопки объектов в комнате
@@ -319,6 +332,7 @@ function first_room() {
 		}
 		document.getElementById('actionRoom'+room_test.activeObjectsArray[0].id).onclick=function(){ door(); };
 		document.getElementById('actionRoom'+room_test.activeObjectsArray[1].id).onclick=function(){ window(); };
+		document.getElementById('actionRoom'+room_test.activeObjectsArray[2].id).onclick=function(){ carpet(); };
 	}
 	check_roomObjects();
 	
@@ -347,9 +361,9 @@ function first_room() {
 		}
 		if (player.inspect.flag == true) {
 			addText('За окном кирпичная кладка. Стекло треснуто.');
-			room_test.activeObjectsArray[2].available = true;
+			room_test.activeObjectsArray[3].available = true;
 			check_roomObjects();
-			document.getElementById('actionRoom'+room_test.activeObjectsArray[2].id).onclick=function(){ window_down(); };
+			document.getElementById('actionRoom'+room_test.activeObjectsArray[3].id).onclick=function(){ window_down(); };
 		}
 		if (player.insert.flag == true) {
 			addText('Что бы вставить?');
@@ -367,7 +381,26 @@ function first_room() {
 				addText('Под подоконником в монтажной пене торчит карточка');
 			}
 			else {
-				addText('На подоконнике следы кровавых пальцев.');
+				addText('На подоконнике кровавые отпечатки пальцев.');
+			}
+		}
+		if (player.insert.flag == true) {
+			addText('Что бы вставить?');
+		}
+	}
+	function carpet() {
+		if (player.open.flag == true) {
+			addText('Что открыть?');
+		}
+		if (player.take.flag == true) {
+			addText('Под ковром записка.');
+		}
+		if (player.inspect.flag == true) {
+			if (player.currentBodyStatus == 1) {
+				addText('');
+			}
+			else {
+				addText('Обычный персидский ковер. С пятнами крови.');
 			}
 		}
 		if (player.insert.flag == true) {
