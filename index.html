@@ -10,6 +10,8 @@ function changeStatus(param,stat) - изменение параметров ст
 check_actions() - обновить кнопки игрока
 check_roomObjects() - обновить кнопки комнаты
 
+use_object(id,element) - вызывается для использования объекта. id вызывающей кнопки, DOM объект
+use_item(id,element) - вызывается для использования предмета
 
 
 */
@@ -559,6 +561,7 @@ function changeStatus(param,stat) {
 
 
 function start_level(level_name) {
+	
 	var load_level = function(level) {
 		var xhr  = new XMLHttpRequest;
 
@@ -581,7 +584,7 @@ function start_level(level_name) {
 	
 	var level = JSON.parse(level_data);
 	var player = level.player;
-	
+	var stepCount = 0;
 	document.getElementById("main-menu").style.display = "none";
 	load_interface(level);
 	
@@ -840,6 +843,10 @@ function start_level(level_name) {
 				end_game('win');
 			}
 		}
+		stepCount++;
+		if (stepCount > 30) {
+			end_game('lose');
+		}
 	}
 }
 
@@ -848,9 +855,13 @@ function end_game(result) {
 		var main_w = document.getElementById('main-div');
 		main_w.innerHTML = 'YOU WIN';
 		main_w.style.fontSize = '200pt';
+		main_w.style.color = 'red';
 	}
 	else if (result == 'lose') {
-	
+		var main_w = document.getElementById('main-div');
+		main_w.innerHTML = 'YOU DIED';
+		main_w.style.fontSize = '170pt';
+		main_w.style.color = 'red';
 	}
 }
 function load_game() {
