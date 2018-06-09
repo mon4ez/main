@@ -74,14 +74,14 @@ var Button = function (label,type,id){
 		}
 	}
 	this.chain = function() {
-		if (type == player){
-			return 1;
+		if (type == 'player'){
+			return this.chain = 1;
 		}
-		else if (type == object) {
-			return 2;
+		else if (type == 'object') {
+			return this.chain = 2;
 		}
 		else {
-			return 3;
+			return this.chain = 3;
 		}
 	}
 }
@@ -472,17 +472,20 @@ function load_test() {
 		xhr.send();
 		if (xhr.status != 200) {
 		  // обработать ошибку
-		  alert( xhr.status + ': ' + xhr.statusText ); // пример вывода: 404: Not Found
+		  console.log( xhr.status + ': ' + xhr.statusText ); // пример вывода: 404: Not Found
 		} else {
 		  // вывести результат
 			level_data = xhr.responseText; // responseText -- текст ответа.
 		}
 	}
-	load_level('load_test');
+	load_level('load_test_buttons');
 	
-	var button1 = new Button() {
-		
-	}
+	
+	var buttonn = new Button('кнопка','player',0);
+	str = JSON.stringify(buttonn);
+	buttonn = JSON.parse(str);
+	buttonn.type = 'object';
+	console.log(buttonn);
 }
 
 function load_game() {
