@@ -529,7 +529,7 @@ function load_interface(level) {
 		roomActions.id = 'roomActions';
 		room_actions.appendChild(roomActions);
 }
-function load_test() {
+function start_level(level_name) {
 	var load_level = function(level) {
 		var xhr  = new XMLHttpRequest;
 
@@ -548,7 +548,7 @@ function load_test() {
 			level_data = xhr.responseText; // responseText -- текст ответа.
 		}
 	}
-	load_level('load_test'); //загружаем уровень 'load_test'
+	load_level(level_name); //загружаем уровень 'load_test'
 	
 	var level = JSON.parse(level_data);
 	var player = level.player;
@@ -587,7 +587,7 @@ function load_test() {
 			if (level.buttons[i].type == 'object' && level.buttons[i].visible) {
 				var button = document.createElement('div');
 				button.id = 'actionRoom'+level.buttons[i].id;
-				button.className = "button pre";
+				button.className = "button";
 				button.style.position = "absolute";
 				button.style.height = "25px";
 				button.style.width = "140px";
@@ -605,6 +605,7 @@ function load_test() {
 			}
 		}
 	}
+	check_roomObjects();
 }
 
 function load_game() {
@@ -619,7 +620,7 @@ function load_game() {
 <div id="main-div">
 	<div id="main-menu" class="pre">
 		<div class="button" onClick="new_game()">Новая игра</div>
-		<div class="button" onClick="load_test()">Лаборатория САМОСБОРА</div>
+		<div class="button" onClick="start_level('load_test')">Лаборатория САМОСБОРА</div>
 		<!--<a class="a_button" onClick="load_game()" href="#">Загрузить игру</a>-->
 	</div>
 </div>
