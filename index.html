@@ -116,11 +116,7 @@ function ActiveObject (id,name,active) {
 	}
 }
 
-//функция обновления текста
-function addText (text) {
-	actualText.innerHTML += '@<p>'+text+'</p>';
-	actualText.scrollTop = actualText.scrollHeight;
-}
+
 
 function new_game() {
 	document.getElementById("main-menu").style.display = "none";
@@ -529,6 +525,14 @@ function load_interface(level) {
 		roomActions.id = 'roomActions';
 		room_actions.appendChild(roomActions);
 }
+
+//функция обновления текста
+function addText (text) {
+	actualText.innerHTML += '@<p>'+text+'</p>';
+	actualText.scrollTop = actualText.scrollHeight;
+}
+
+
 function start_level(level_name) {
 	var load_level = function(level) {
 		var xhr  = new XMLHttpRequest;
@@ -562,7 +566,7 @@ function start_level(level_name) {
 		for (i=0,y=0;i<level.buttons.length;i++) {
 			if (level.buttons[i].type == 'player' && level.buttons[i].visible) {
 				var button = document.createElement('div');
-				button.id = 'action'+level.buttons[i].id;
+				button.id = level.buttons[i].id;
 				button.className = "button";
 				button.style.position = "absolute";
 				button.style.height = "25px";
@@ -577,6 +581,7 @@ function start_level(level_name) {
 				}
 				playerActions.appendChild(button);
 				button.innerHTML = level.buttons[i].label;
+				button.onclick=function(){ object_action(this.id); };
 			}
 		}
 	}
@@ -587,7 +592,7 @@ function start_level(level_name) {
 		for (i=0,y=0;i<level.buttons.length;i++) {
 			if (level.buttons[i].type == 'object' && level.buttons[i].visible) {
 				var button = document.createElement('div');
-				button.id = 'actionRoom'+level.buttons[i].id;
+				button.id = level.buttons[i].id;
 				button.className = "button";
 				button.style.position = "absolute";
 				button.style.height = "25px";
@@ -603,7 +608,7 @@ function start_level(level_name) {
 				y++;
 				roomActions.appendChild(button);
 				button.innerHTML = level.buttons[i].label;
-				button.onclick=function(){ level.buttons[i].name+"()"; };
+				button.onclick=function(){ object_action(this.id); };
 			}
 			
 		}
@@ -612,6 +617,13 @@ function start_level(level_name) {
 	check_actions();
 	check_roomObjects();
 	
+	//обработчик событий кнопки
+	function object_action(button) {
+		if (button == 1) {
+			player.currentBodyStatus = 1;
+			addText('Вы сели');
+		}
+	}
 	
 }
 
