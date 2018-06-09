@@ -19,6 +19,8 @@ use_item(id,element) - вызывается для использования п
 
 var game_url = 'https://samosborthegame.github.io/main/';
 
+document.oncontextmenu = function (){return false};
+
 var Player = function(name){
 	this.name = name;
 	this.age = '18';
@@ -730,7 +732,9 @@ function start_level(level_name) {
 				//addText(level.buttons[action_id].label+'?');
 			}
 		}
-		
+	//Логика кнопок
+	//Вот это вот все, надо бы как-то сделать менее зависимым от комнаты, хотя мне кажется это невозмножно.
+	//Можно попытаться сделать обработчик дежурных фраз, все остальное придется кодить для каждой комнаты.
 		if (button == 0) {//Встать
 			if (player.currentBodyStatus != 0) {
 				player.currentBodyStatus = 0;
