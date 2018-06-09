@@ -604,7 +604,7 @@ function start_level(level_name) {
 				}
 				playerActions.appendChild(button);
 				button.innerHTML = level.buttons[i].label;
-				button.onclick=function(){ object_action(this.id); };
+				button.onclick=function(){ object_action(this); };
 				
 			}
 		}
@@ -634,7 +634,7 @@ function start_level(level_name) {
 				
 				roomActions.appendChild(button);
 				button.innerHTML = level.buttons[i].label;
-				button.onclick=function(){ object_action(this.id); };
+				button.onclick=function(){ object_action(this); };
 			}
 			
 		}
@@ -644,7 +644,12 @@ function start_level(level_name) {
 	check_roomObjects();
 	
 	//обработчик событий кнопок
-	function object_action(button) {
+	function object_action(elem) {
+		var button = elem.id;
+		
+		if (level.buttons[button].type == 'player') { //счетчик цепочки действий
+			cCount = level.buttons[button].chain;
+		}
 		if (button == 0) {//Встать
 			if (player.currentBodyStatus != 0) {
 				player.currentBodyStatus = 0;
@@ -685,9 +690,41 @@ function start_level(level_name) {
 				addText('Вы не можете прыгнуть из этого положения');
 			}
 		}
-		//console.log(button);
+		if (button == 4) {//Открыть
+			use(button,elem);
+			/*while (cCount > 1) {
+				
+			}*/
+		}
+		if (button == 5) {//Взять
+			use(button,elem);
+		}
+		if (button == 6) {//Осмотреть
+			use(button,elem);
+		}
+		if (button == 7) {//Вставить
+			use(button,elem);
+		}
+		
+		function use(action_id,element) {
+			if (level.buttons[action_id].active == true) {
+				level.buttons[action_id].active = false;
+				element.className = "button";
+			}
+			else {
+				level.buttons[action_id].active = true;
+				for (i=0;i<level.buttons.length;i++) {
+					if (level.buttons[i].id != action_id && level.buttons[i].type == 'player') {
+						level.buttons[i].active = false;
+						document.getElementById(i).className = "button";
+					}
+				}
+				element.className = "button_flaged";
+			}
+		}
+		
+		
 	}
-	
 }
 
 function load_game() {
