@@ -482,7 +482,10 @@ function load_test() {
 	}
 	load_level('load_test');
 	
+	var level = JSON.parse(level_data);
 	
+	var player = level.player;
+	console.log(player);
 	
 
 }
