@@ -1,0 +1,28 @@
+{
+	"title":"Клетка Сыча",
+	"adress":"Этаж 522, сектор Г",
+	"img":"img/back/lol5.png",
+	"text":"Вы в пустой комнате. Стальная дверь без ручки без замка. Обычное пластиковое окно с подоконником, но за окном - кирпичная кладка. На полу ковер.",
+	"player": {
+		"name":"Сычев",
+		"age":"18",
+		"health":100,
+		"bodyStatus":["Стоит","Сидит","Лежит"],
+		"currentBodyStatus":0
+	},
+    "buttons": [
+		{
+			"id":0,"label":"Встать","type":"player","visible":true,"active":false,"chain":1
+		},
+		{
+			"id":1,"label":"Сесть","type":"player","visible":true,"active":false,"chain":1
+		}
+	],
+	"phrases": [
+		{
+			"id":0,
+			"text":"Вы встали",
+			
+		}
+	]
+}

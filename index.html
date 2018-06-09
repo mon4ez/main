@@ -129,6 +129,7 @@ function new_game() {
 	
 	//Запускаем игрока в комнату
 	first_room();
+	
 }
 
 
@@ -456,6 +457,7 @@ function first_room() {
 			addText('Что бы вставить?');
 		}
 	}
+	console.log(JSON.stringify(player));
 	
 	
 }
@@ -466,7 +468,7 @@ function load_test() {
 		xhr.open('GET', game_url+'levels/'+level+'.txt', false);
 
 		xhr.onload = function () {
-			console.log(xhr.responseText);
+			//console.log(xhr.responseText);
 		};
 
 		xhr.send();
@@ -478,14 +480,11 @@ function load_test() {
 			level_data = xhr.responseText; // responseText -- текст ответа.
 		}
 	}
-	load_level('load_test_buttons');
+	load_level('load_test');
 	
 	
-	var buttonn = new Button('кнопка','player',0);
-	str = JSON.stringify(buttonn);
-	buttonn = JSON.parse(str);
-	buttonn.type = 'object';
-	console.log(buttonn);
+	
+
 }
 
 function load_game() {

@@ -1,3 +1,0 @@
-{
-	"id":0,"label":"кнопка","type":"player","visible":true,"active":false,"chain":1
-}
