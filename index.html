@@ -461,6 +461,62 @@ function first_room() {
 	
 	
 }
+
+//С этой части документа начинает вторая версия написания игры использую загрузку данных из json
+function load_interface(level) {
+	
+	var main_w = document.getElementById('main-div');
+	main_w.style.backgroundImage = "url("+level.img+")";
+	
+	var room_title = document.createElement('div');
+	room_title.id = 'room_title';
+	main_w.appendChild(room_title);
+	room_title.innerHTML = level.title + ' : ' + level.address;
+	
+	var room_image = document.createElement('div');
+	room_image.id = 'room_image';
+	main_w.appendChild(room_image);
+	
+	var room_image_padding = document.createElement('div');
+	room_image_padding.id = 'room_image_padding';
+	room_image.appendChild(room_image_padding);
+	
+	var room_textArea = document.createElement('div');
+	room_textArea.id = 'room_textArea';
+	room_image.appendChild(room_textArea);
+	
+		var actualText_back = document.createElement('div');
+		actualText_back.id = 'actualText_back';
+		room_textArea.appendChild(actualText_back);
+		
+		var actualText = document.createElement('div');
+		actualText.id = 'actualText';
+		actualText.innerHTML = level.text;
+		room_textArea.appendChild(actualText);
+		
+		var playerStatus_back = document.createElement('div');
+		playerStatus_back.id = 'playerStatus_back';
+		room_textArea.appendChild(playerStatus_back);
+		
+		var playerStatus = document.createElement('div');
+		playerStatus.id = 'playerStatus';
+		room_textArea.appendChild(playerStatus);
+			
+			var namePlayerStatus = document.createElement('div');
+			namePlayerStatus.id = 'namePlayerStatus';
+			namePlayerStatus.innerHTML = level.player.name;
+			playerStatus.appendChild(namePlayerStatus);
+			
+			var healthPlayerStatus = document.createElement('div');
+			healthPlayerStatus.id = 'healthPlayerStatus';
+			healthPlayerStatus.innerHTML = level.player.health;
+			playerStatus.appendChild(healthPlayerStatus);
+			
+			var bodyPlayerStatus = document.createElement('div');
+			bodyPlayerStatus.id = 'bodyPlayerStatus';
+			bodyPlayerStatus.innerHTML = level.player.currentBodyStatus;
+			playerStatus.appendChild(bodyPlayerStatus);
+}
 function load_test() {
 	var load_level = function(level) {
 		var xhr  = new XMLHttpRequest;
@@ -483,11 +539,10 @@ function load_test() {
 	load_level('load_test');
 	
 	var level = JSON.parse(level_data);
-	
 	var player = level.player;
-	console.log(player);
 	
-
+	document.getElementById("main-menu").style.display = "none";
+	load_interface(level);
 }
 
 function load_game() {
