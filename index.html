@@ -459,7 +459,7 @@ function first_room() {
 	
 }
 function load_test() {
-	var read_level = function(level) {
+	var load_level = function(level) {
 		var xhr  = new XMLHttpRequest;
 
 		xhr.open('GET', 'levels/'+level+'.txt', false);
@@ -477,7 +477,7 @@ function load_test() {
 		  alert( xhr.responseText ); // responseText -- текст ответа.
 		}
 	}
-	read_level(load_test);
+	load_level('load_test');
 	
 }
 
