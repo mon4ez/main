@@ -4,6 +4,17 @@
 </script>
 	
 <script> 
+/* *** Доступные функции *** 
+addText(text) - добавляет текст в текстовую область
+function changeStatus(param,stat) - изменение параметров статуса игрока. param: 0 здоровье, 1 положение тела. stat - bodyStatus
+check_actions() - обновить кнопки игрока
+check_roomObjects() - обновить кнопки комнаты
+
+
+
+*/
+
+
 var game_url = 'https://samosborthegame.github.io/main/';
 
 var Player = function(name){
@@ -527,7 +538,7 @@ function load_interface(level) {
 }
 
 //функция обновления текста
-function addText (text) {
+function addText(text) {
 	actualText.innerHTML += '@<p>'+text+'</p>';
 	actualText.scrollTop = actualText.scrollHeight;
 }
@@ -650,7 +661,7 @@ function start_level(level_name) {
 			}
 		}
 		if (button == 2) {
-		
+			
 		}
 		//console.log(button);
 	}
