@@ -556,9 +556,10 @@ function start_level(level_name) {
 	document.getElementById("main-menu").style.display = "none";
 	load_interface(level);
 	
+	//Кнопки игрока
 	function check_actions() {
 		playerActions.innerHTML = '';
-		for (i=0;i<level.buttons.length;i++) {
+		for (i=0,y=0;i<level.buttons.length;i++) {
 			if (level.buttons[i].type == 'player' && level.buttons[i].visible) {
 				var button = document.createElement('div');
 				button.id = 'action'+level.buttons[i].id;
@@ -568,22 +569,22 @@ function start_level(level_name) {
 				button.style.width = "140px";
 				if (i % 2) {
 					button.style.left = "160px";
-					button.style.top = (i-1) * 20 + 4 + 'px';
+					button.style.top = (y-1) * 20 + 4 + 'px';
 				}
 				else {
 					button.style.left = "5px";
-					button.style.top = i * 20 + 4 + 'px';
+					button.style.top = y * 20 + 4 + 'px';
 				}
 				playerActions.appendChild(button);
 				button.innerHTML = level.buttons[i].label;
 			}
 		}
 	}
-	check_actions();
 	
+	//Кнопки объектов
 	function check_roomObjects () {
 		roomActions.innerHTML = '';
-		for (i=0;i<level.buttons.length;i++) {
+		for (i=0,y=0;i<level.buttons.length;i++) {
 			if (level.buttons[i].type == 'object' && level.buttons[i].visible) {
 				var button = document.createElement('div');
 				button.id = 'actionRoom'+level.buttons[i].id;
@@ -593,19 +594,25 @@ function start_level(level_name) {
 				button.style.width = "140px";
 				if (i % 2) {
 					button.style.left = "160px";
-					button.style.top = (i-1) * 20 + 4 + 'px';
+					button.style.top = (y-1) * 20 + 4 + 'px';
 				}
 				else {
 					button.style.left = "5px";
-					button.style.top = i * 20 + 4 + 'px';
+					button.style.top = y * 20 + 4 + 'px';
 				}
-				
+				y++;
 				roomActions.appendChild(button);
 				button.innerHTML = level.buttons[i].label;
+				button.onclick=function(){ level.buttons[i].name+"()"; };
 			}
+			
 		}
 	}
+	
+	check_actions();
 	check_roomObjects();
+	
+	
 }
 
 function load_game() {

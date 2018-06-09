@@ -12,13 +12,13 @@
 	},
     "buttons": [
 		{
-			"id":0,"label":"Встать","type":"player","visible":true,"active":false,"chain":1
+			"id":0,"name":"getup","label":"Встать","type":"player","visible":true,"active":false,"chain":1
 		},
 		{
-			"id":1,"label":"Сесть","type":"player","visible":false,"active":false,"chain":1
+			"id":1,"name":"sitdown","label":"Сесть","type":"player","visible":false,"active":false,"chain":1
 		},
 		{
-			"id":2,"label":"Дверь","type":"object","visible":true,"active":false,"chain":1
+			"id":2,"name":"door","label":"Дверь","type":"object","visible":true,"active":false,"chain":1
 		}
 	],
 	"phrases": [
