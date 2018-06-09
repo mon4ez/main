@@ -50,10 +50,10 @@
 		}
 		,
 		{
-			"id":13,"label":"Пластиковая карта","type":"item","visible":false,"active":false,"chain":1
+			"id":12,"label":"Пластиковая карта","type":"item","visible":false,"active":false,"chain":1
 		},
 		{
-			"id":14,"label":"Дверь","type":"object","visible":true,"active":false,"chain":1
+			"id":13,"label":"Дверь","type":"object","visible":true,"active":false,"chain":1
 		}
 	],
 	"phrases": [

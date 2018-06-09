@@ -634,9 +634,9 @@ function start_level(level_name) {
 				
 				roomActions.appendChild(button);
 				button.innerHTML = level.buttons[i].label;
+				//console.log(level.buttons[i].type);
 				button.onclick=function(){ object_action(this); };
 			}
-			
 		}
 	}
 	
@@ -646,10 +646,11 @@ function start_level(level_name) {
 	//обработчик событий кнопок
 	function object_action(elem) {
 		var button = elem.id;
-		
-		if (level.buttons[button].type == 'player') { //счетчик цепочки действий
-			cCount = level.buttons[button].chain;
-		}
+		console.log(button);
+		console.log(level.buttons[button].label);
+		/*if (level.buttons[button].type == 'player') { //счетчик цепочки действий
+			var cCount = level.buttons[button].chain;
+		}*/
 		
 		function use(action_id,element) {
 			if (level.buttons[action_id].active == true) {
@@ -665,6 +666,7 @@ function start_level(level_name) {
 					}
 				}
 				element.className = "button_flaged";
+				addText(level.buttons[action_id].label+'?');
 			}
 		}
 		
@@ -727,10 +729,12 @@ function start_level(level_name) {
 
 		
 		if (button == 14) {//Дверь
-			
+			for (i=0;i<level.buttons.length;i++) {
+				if (level.buttons[i].id == 4) {
+					addText('Дверь заперта!');
+				}
+			}
 		}
-		
-		
 	}
 }
 
