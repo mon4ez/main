@@ -113,6 +113,13 @@ background-size: 100%;
 	position:absolute;
 	left:325px;
 }
+#playerItems {
+	height:200px;
+	width:300px;
+	position:absolute;
+	right:4px;
+}
+
 #system_menu {
 	position:absolute;
 	top:-5px;
@@ -141,8 +148,8 @@ li a {
 	display:block;
 }
 .pre {
-	/*border: 1px solid black;
-	color:black;*/
+	border: 1px solid black;
+	/*color:black;*/
 }
 .button {
 	font-size: 15pt;

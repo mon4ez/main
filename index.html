@@ -535,6 +535,10 @@ function load_interface(level) {
 		var roomActions = document.createElement('div');
 		roomActions.id = 'roomActions';
 		room_actions.appendChild(roomActions);
+		
+		var playerItems = document.createElement('div');
+		playerItems.id = 'playerItems';
+		room_actions.appendChild(playerItems);
 }
 
 //функция обновления текста
@@ -639,18 +643,52 @@ function start_level(level_name) {
 			}
 		}
 	}
+	//кнопки предметов
+	function check_item () {
+		playerItems.innerHTML = '';
+		for (i=0,x=0,y=0;i<level.buttons.length;i++) {
+			if (level.buttons[i].type == 'item' && level.buttons[i].visible) {
+				var button = document.createElement('div');
+				button.id = level.buttons[i].id;
+				button.className = "button";
+				button.style.position = "absolute";
+				button.style.height = "25px";
+				button.style.width = "140px";
+				if (i % 2) {
+					button.style.right = "160px";
+					button.style.top = y * 40 + 4 + 'px';
+					y++;
+				}
+				else if (i % 3) {
+					button.style.right = "310px";
+					button.style.top = y * 40 + 4 + 'px';
+					y++;
+				}
+				else {
+					button.style.right = "5px";
+					button.style.top = x * 40 + 4 + 'px';
+					x++;
+				}
+				
+				playerItems.appendChild(button);
+				button.innerHTML = level.buttons[i].label;
+				//console.log(level.buttons[i].type);
+				button.onclick=function(){ object_action(this); };
+			}
+		}
+	}
 	
 	check_actions();
 	check_roomObjects();
-	
+	check_item();
 	//обработчик событий кнопок
 	function object_action(elem) {
 		var button = elem.id;
-		console.log(button);
-		console.log(level.buttons[button].label);
-		/*if (level.buttons[button].type == 'player') { //счетчик цепочки действий
+		//console.log(button);
+		//console.log(level.buttons[button].label);
+		if (level.buttons[button].type == 'player') { //счетчик цепочки действий
 			var cCount = level.buttons[button].chain;
-		}*/
+		}
 		
 		function use(action_id,element) {
 			if (level.buttons[action_id].active == true) {
@@ -712,9 +750,6 @@ function start_level(level_name) {
 		}
 		if (button == 4) {//Открыть
 			use(button,elem);
-			/*while (cCount > 1) {
-				
-			}*/
 		}
 		if (button == 5) {//Взять
 			use(button,elem);
@@ -725,14 +760,30 @@ function start_level(level_name) {
 		if (button == 7) {//Вставить
 			use(button,elem);
 		}
-		
-
-		
-		if (button == 14) {//Дверь
-			for (i=0;i<level.buttons.length;i++) {
-				if (level.buttons[i].id == 4) {
-					addText('Дверь заперта!');
-				}
+		if (button == 9) {//Ковер
+			if (level.buttons[5].active == true) {
+				addText('Под ковром записка.');
+				level.buttons[11].visible = true;
+				check_item();
+			}
+			if (level.buttons[6].active == true){
+				addText('Обычный персидский ковер. С пятнами крови.');
+			}
+		}
+		if (button == 10) {//Подоконник
+			if (level.buttons[4].active == true) {
+				addText('Дверь заперта!');
+			}
+			if (level.buttons[6].active == true){
+				addText('Железная дверь без ручек и замков. Выглядит достаточно прочной!');
+			}
+		}
+		if (button == 13) {//Дверь
+			if (level.buttons[4].active == true) {
+				addText('Дверь заперта!');
+			}
+			if (level.buttons[6].active == true){
+				addText('Железная дверь без ручек и замков. Выглядит достаточно прочной!');
 			}
 		}
 	}
@@ -753,7 +804,7 @@ function load_game() {
 		<li class="button"> <a href=#>Загрузить игру </a></li>
 		<li class="button"> <a href=''>Выход в главное меню </a></li>
 	</ul>
-	<div id="main-menu" class="pre">
+	<div id="main-menu">
 		<div class="button" onClick="new_game()">Новая игра</div>
 		<div class="button" onClick="start_level('load_test')">Лаборатория САМОСБОРА</div>
 		<!--<a class="a_button" onClick="load_game()" href="#">Загрузить игру</a>-->
