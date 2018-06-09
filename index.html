@@ -584,7 +584,7 @@ function start_level(level_name) {
 	//Кнопки игрока
 	function check_actions() {
 		playerActions.innerHTML = '';
-		for (i=0,y=0;i<level.buttons.length;i++) {
+		for (i=0,x=0,y=0;i<level.buttons.length;i++) {
 			if (level.buttons[i].type == 'player' && level.buttons[i].visible) {
 				var button = document.createElement('div');
 				button.id = level.buttons[i].id;
@@ -594,15 +594,18 @@ function start_level(level_name) {
 				button.style.width = "140px";
 				if (i % 2) {
 					button.style.left = "160px";
-					button.style.top = y * 20 + 4 + 'px';
+					button.style.top = y * 40 + 4 + 'px';
+					y++;
 				}
 				else {
 					button.style.left = "5px";
-					button.style.top = y * 20 + 4 + 'px';
+					button.style.top = x * 40 + 4 + 'px';
+					x++;
 				}
 				playerActions.appendChild(button);
 				button.innerHTML = level.buttons[i].label;
 				button.onclick=function(){ object_action(this.id); };
+				
 			}
 		}
 	}
@@ -610,7 +613,7 @@ function start_level(level_name) {
 	//Кнопки объектов
 	function check_roomObjects () {
 		roomActions.innerHTML = '';
-		for (i=0,y=0;i<level.buttons.length;i++) {
+		for (i=0,x=0,y=0;i<level.buttons.length;i++) {
 			if (level.buttons[i].type == 'object' && level.buttons[i].visible) {
 				var button = document.createElement('div');
 				button.id = level.buttons[i].id;
@@ -620,13 +623,15 @@ function start_level(level_name) {
 				button.style.width = "140px";
 				if (i % 2) {
 					button.style.left = "160px";
-					button.style.top = y * 20 + 4 + 'px';
+					button.style.top = y * 40 + 4 + 'px';
+					y++;
 				}
 				else {
 					button.style.left = "5px";
-					button.style.top = y * 20 + 4 + 'px';
+					button.style.top = x * 40 + 4 + 'px';
+					x++;
 				}
-				y++;
+				
 				roomActions.appendChild(button);
 				button.innerHTML = level.buttons[i].label;
 				button.onclick=function(){ object_action(this.id); };
@@ -640,7 +645,7 @@ function start_level(level_name) {
 	
 	//обработчик событий кнопок
 	function object_action(button) {
-		if (button == 0) {
+		if (button == 0) {//Встать
 			if (player.currentBodyStatus != 0) {
 				player.currentBodyStatus = 0;
 				changeStatus(1,player.bodyStatus[0]);
@@ -650,7 +655,7 @@ function start_level(level_name) {
 				addText('Вы уже стоите');
 			}
 		}
-		if (button == 1) {
+		if (button == 1) {//Сесть
 			if (player.currentBodyStatus != 1) {
 				player.currentBodyStatus = 1;
 				changeStatus(1,player.bodyStatus[1]);
@@ -660,8 +665,25 @@ function start_level(level_name) {
 				addText('Вы уже сидите');
 			}
 		}
-		if (button == 2) {
-			
+		if (button == 2) {//Лечь
+			if (player.currentBodyStatus != 2) {
+				player.currentBodyStatus = 2;
+				changeStatus(1,player.bodyStatus[2]);
+				addText('Вы легли');
+			}
+			else {
+				addText('Вы уже лежите');
+			}
+		}
+		if (button == 3) {//Пригнуть
+			if (player.currentBodyStatus != 2) {
+				player.currentBodyStatus = 0;
+				changeStatus(1,player.bodyStatus[0]);
+				addText('Вы подпрыгнули, ничего не произошло');
+			}
+			else {
+				addText('Вы не можете прыгнуть из этого положения');
+			}
 		}
 		//console.log(button);
 	}
@@ -677,7 +699,7 @@ function load_game() {
 </head>
 <body>
 
-<div id="main-div">
+<div id="main-div" ondblclick="" onselectstart="return false" onmousedown="return false">
 	<ul id="system_menu" class="button">
 		<li class="button"> <a href=#>Сохранить игру </a></li>
 		<li class="button"> <a href=#>Загрузить игру </a></li>

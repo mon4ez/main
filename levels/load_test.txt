@@ -21,32 +21,32 @@
 			"id":2,"label":"Лечь","type":"player","visible":true,"active":false,"chain":1
 		},
 		{
-			"id":4,"label":"Прыгнуть","type":"player","visible":true,"active":false,"chain":1
+			"id":3,"label":"Прыгнуть","type":"player","visible":true,"active":false,"chain":1
 		},
 		{
-			"id":5,"label":"Открыть","type":"player","visible":true,"active":false,"chain":2
+			"id":4,"label":"Открыть","type":"player","visible":true,"active":false,"chain":2
 		},
 		{
-			"id":6,"label":"Взять","type":"player","visible":true,"active":false,"chain":2
+			"id":5,"label":"Взять","type":"player","visible":true,"active":false,"chain":2
 		},
 		{
-			"id":7,"label":"Осмотреть","type":"player","visible":true,"active":false,"chain":2
+			"id":6,"label":"Осмотреть","type":"player","visible":true,"active":false,"chain":2
 		},
 		{
-			"id":8,"label":"Вставить","type":"player","visible":true,"active":false,"chain":3
+			"id":7,"label":"Вставить","type":"player","visible":true,"active":false,"chain":3
 		},
 		{
-			"id":9,"label":"Окно","type":"object","visible":true,"active":false,"chain":1
+			"id":8,"label":"Окно","type":"object","visible":true,"active":false,"chain":1
 		},
 		{
-			"id":10,"label":"Ковер","type":"object","visible":true,"active":false,"chain":1
+			"id":9,"label":"Ковер","type":"object","visible":true,"active":false,"chain":1
 		},
 		{
-			"id":11,"label":"Подоконник","type":"object","visible":false,"active":false,"chain":1
+			"id":10,"label":"Подоконник","type":"object","visible":false,"active":false,"chain":1
 		}
 		,
 		{
-			"id":12,"label":"Записка","type":"item","visible":false,"active":false,"chain":1
+			"id":11,"label":"Записка","type":"item","visible":false,"active":false,"chain":1
 		}
 		,
 		{
