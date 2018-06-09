@@ -509,13 +509,25 @@ function load_interface(level) {
 			
 			var healthPlayerStatus = document.createElement('div');
 			healthPlayerStatus.id = 'healthPlayerStatus';
-			healthPlayerStatus.innerHTML = level.player.health;
+			healthPlayerStatus.innerHTML = level.player.health +"%";
 			playerStatus.appendChild(healthPlayerStatus);
 			
 			var bodyPlayerStatus = document.createElement('div');
 			bodyPlayerStatus.id = 'bodyPlayerStatus';
-			bodyPlayerStatus.innerHTML = level.player.currentBodyStatus;
+			bodyPlayerStatus.innerHTML = level.player.bodyStatus[level.player.currentBodyStatus];
 			playerStatus.appendChild(bodyPlayerStatus);
+			
+	var room_actions = document.createElement('div');
+	room_actions.id = 'room_actions';
+	room_image.appendChild(room_actions);
+		
+		var playerActions = document.createElement('div');
+		playerActions.id = 'playerActions';
+		room_actions.appendChild(playerActions);
+		
+		var roomActions = document.createElement('div');
+		roomActions.id = 'roomActions';
+		room_actions.appendChild(roomActions);
 }
 function load_test() {
 	var load_level = function(level) {
@@ -530,19 +542,69 @@ function load_test() {
 		xhr.send();
 		if (xhr.status != 200) {
 		  // обработать ошибку
-		  console.log( xhr.status + ': ' + xhr.statusText ); // пример вывода: 404: Not Found
+		  console.log( xhr.status + ': ' + xhr.statusText );
 		} else {
 		  // вывести результат
 			level_data = xhr.responseText; // responseText -- текст ответа.
 		}
 	}
-	load_level('load_test');
+	load_level('load_test'); //загружаем уровень 'load_test'
 	
 	var level = JSON.parse(level_data);
 	var player = level.player;
 	
 	document.getElementById("main-menu").style.display = "none";
 	load_interface(level);
+	
+	function check_actions() {
+		playerActions.innerHTML = '';
+		for (i=0;i<level.buttons.length;i++) {
+			if (level.buttons[i].type == 'player' && level.buttons[i].visible) {
+				var button = document.createElement('div');
+				button.id = 'action'+level.buttons[i].id;
+				button.className = "button";
+				button.style.position = "absolute";
+				button.style.height = "25px";
+				button.style.width = "140px";
+				if (i % 2) {
+					button.style.left = "160px";
+					button.style.top = (i-1) * 20 + 4 + 'px';
+				}
+				else {
+					button.style.left = "5px";
+					button.style.top = i * 20 + 4 + 'px';
+				}
+				playerActions.appendChild(button);
+				button.innerHTML = level.buttons[i].label;
+			}
+		}
+	}
+	check_actions();
+	
+	function check_roomObjects () {
+		roomActions.innerHTML = '';
+		for (i=0;i<level.buttons.length;i++) {
+			if (level.buttons[i].type == 'object' && level.buttons[i].visible) {
+				var button = document.createElement('div');
+				button.id = 'actionRoom'+level.buttons[i].id;
+				button.className = "button pre";
+				button.style.position = "absolute";
+				button.style.height = "25px";
+				button.style.width = "140px";
+				if (i % 2) {
+					button.style.left = "160px";
+					button.style.top = (i-1) * 20 + 4 + 'px';
+				}
+				else {
+					button.style.left = "5px";
+					button.style.top = i * 20 + 4 + 'px';
+				}
+				
+				roomActions.appendChild(button);
+				button.innerHTML = level.buttons[i].label;
+			}
+		}
+	}
 }
 
 function load_game() {
