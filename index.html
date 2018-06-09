@@ -487,7 +487,7 @@ function load_interface(level) {
 		
 		var actualText = document.createElement('div');
 		actualText.id = 'actualText';
-		actualText.innerHTML = level.text;
+		actualText.innerHTML = level.text + '<br>';
 		room_textArea.appendChild(actualText);
 		
 		var playerStatus_back = document.createElement('div');
@@ -532,6 +532,16 @@ function addText (text) {
 	actualText.scrollTop = actualText.scrollHeight;
 }
 
+//функция обновления статуса персонажа
+function changeStatus(param,stat) {
+	if (param == 0) {//Здоровье
+		healthPlayerStatus.innerHTML = stat;
+	}
+	if (param == 1) {//Положение
+		bodyPlayerStatus.innerHTML = stat;
+	}
+}
+
 
 function start_level(level_name) {
 	var load_level = function(level) {
@@ -573,7 +583,7 @@ function start_level(level_name) {
 				button.style.width = "140px";
 				if (i % 2) {
 					button.style.left = "160px";
-					button.style.top = (y-1) * 20 + 4 + 'px';
+					button.style.top = y * 20 + 4 + 'px';
 				}
 				else {
 					button.style.left = "5px";
@@ -599,7 +609,7 @@ function start_level(level_name) {
 				button.style.width = "140px";
 				if (i % 2) {
 					button.style.left = "160px";
-					button.style.top = (y-1) * 20 + 4 + 'px';
+					button.style.top = y * 20 + 4 + 'px';
 				}
 				else {
 					button.style.left = "5px";
@@ -617,12 +627,32 @@ function start_level(level_name) {
 	check_actions();
 	check_roomObjects();
 	
-	//обработчик событий кнопки
+	//обработчик событий кнопок
 	function object_action(button) {
-		if (button == 1) {
-			player.currentBodyStatus = 1;
-			addText('Вы сели');
+		if (button == 0) {
+			if (player.currentBodyStatus != 0) {
+				player.currentBodyStatus = 0;
+				changeStatus(1,player.bodyStatus[0]);
+				addText('Вы встали');
+			}
+			else {
+				addText('Вы уже стоите');
+			}
 		}
+		if (button == 1) {
+			if (player.currentBodyStatus != 1) {
+				player.currentBodyStatus = 1;
+				changeStatus(1,player.bodyStatus[1]);
+				addText('Вы сели');
+			}
+			else {
+				addText('Вы уже сидите');
+			}
+		}
+		if (button == 2) {
+		
+		}
+		//console.log(button);
 	}
 	
 }
