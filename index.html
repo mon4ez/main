@@ -650,6 +650,24 @@ function start_level(level_name) {
 		if (level.buttons[button].type == 'player') { //счетчик цепочки действий
 			cCount = level.buttons[button].chain;
 		}
+		
+		function use(action_id,element) {
+			if (level.buttons[action_id].active == true) {
+				level.buttons[action_id].active = false;
+				element.className = "button";
+			}
+			else {
+				level.buttons[action_id].active = true;
+				for (i=0;i<level.buttons.length;i++) {
+					if (level.buttons[i].id != action_id && level.buttons[i].type == 'player') {
+						level.buttons[i].active = false;
+						document.getElementById(i).className = "button";
+					}
+				}
+				element.className = "button_flaged";
+			}
+		}
+		
 		if (button == 0) {//Встать
 			if (player.currentBodyStatus != 0) {
 				player.currentBodyStatus = 0;
@@ -706,21 +724,10 @@ function start_level(level_name) {
 			use(button,elem);
 		}
 		
-		function use(action_id,element) {
-			if (level.buttons[action_id].active == true) {
-				level.buttons[action_id].active = false;
-				element.className = "button";
-			}
-			else {
-				level.buttons[action_id].active = true;
-				for (i=0;i<level.buttons.length;i++) {
-					if (level.buttons[i].id != action_id && level.buttons[i].type == 'player') {
-						level.buttons[i].active = false;
-						document.getElementById(i).className = "button";
-					}
-				}
-				element.className = "button_flaged";
-			}
+
+		
+		if (button == 14) {//Дверь
+			
 		}
 		
 		
