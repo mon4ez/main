@@ -633,7 +633,7 @@ function start_level(level_name) {
 			if (player.currentBodyStatus != 0) {
 				player.currentBodyStatus = 0;
 				changeStatus(1,player.bodyStatus[0]);
-				addText('Вы встали');
+				addText(level.phrases[0].text);
 			}
 			else {
 				addText('Вы уже стоите');
@@ -643,7 +643,7 @@ function start_level(level_name) {
 			if (player.currentBodyStatus != 1) {
 				player.currentBodyStatus = 1;
 				changeStatus(1,player.bodyStatus[1]);
-				addText('Вы сели');
+				addText(level.phrases[1].text);
 			}
 			else {
 				addText('Вы уже сидите');
