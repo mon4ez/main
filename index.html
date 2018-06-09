@@ -690,7 +690,7 @@ function start_level(level_name) {
 			var cCount = level.buttons[button].chain;
 		}
 		
-		function use(action_id,element) {
+		function use_object(action_id,element) {
 			if (level.buttons[action_id].active == true) {
 				level.buttons[action_id].active = false;
 				element.className = "button";
@@ -705,6 +705,26 @@ function start_level(level_name) {
 				}
 				element.className = "button_flaged";
 				addText(level.buttons[action_id].label+'?');
+			}
+		}
+		function use_item(action_id,element) {
+			if (level.buttons[action_id].active == true) {
+				level.buttons[action_id].active = false;
+				element.className = "button";
+			}
+			else {
+				level.buttons[action_id].active = true;
+				for (i=0;i<level.buttons.length;i++) {
+					if (level.buttons[i].id != action_id && level.buttons[i].type == 'item') {
+						level.buttons[i].active = false;
+						console.log(i)
+						if (document.getElementById(i)) {
+							document.getElementById(i).className = "button";
+						}
+					}
+				}
+				element.className = "button_flaged";
+				//addText(level.buttons[action_id].label+'?');
 			}
 		}
 		
@@ -749,16 +769,24 @@ function start_level(level_name) {
 			}
 		}
 		if (button == 4) {//Открыть
-			use(button,elem);
+			use_object(button,elem);
 		}
 		if (button == 5) {//Взять
-			use(button,elem);
+			use_object(button,elem);
 		}
 		if (button == 6) {//Осмотреть
-			use(button,elem);
+			use_object(button,elem);
 		}
 		if (button == 7) {//Вставить
-			use(button,elem);
+			use_object(button,elem);
+			
+		}
+		if (button == 8) {//Окно
+			if (level.buttons[6].active == true){
+				addText('За окном кирпичная кладка. Стекло треснуто.');
+				level.buttons[10].visible = true;
+				check_roomObjects();
+			}
 		}
 		if (button == 9) {//Ковер
 			if (level.buttons[5].active == true) {
@@ -771,11 +799,33 @@ function start_level(level_name) {
 			}
 		}
 		if (button == 10) {//Подоконник
-			if (level.buttons[4].active == true) {
-				addText('Дверь заперта!');
+			if (level.buttons[6].active == true){
+				if (player.currentBodyStatus==1) {
+					addText('Под подоконником в монтажной пене торчит карточка');
+					level.buttons[12].visible = true;
+					check_item();
+				}
+				else {
+					addText('На подоконнике кровавые отпечатки пальцев.');
+				}
+				
+			}
+		}
+		if (button == 11) {//Записка
+			if (level.buttons[5].active == true){
+				addText('Вы взяли записку. Корявым почерком выведено: ищи карточку.');
+			}
+		}
+		if (button == 12) {//Карточка
+			if (level.buttons[5].active == true){
+				addText('Вы достали карточку. Аккуратный квадратик черного пластика без надписей.');
 			}
 			if (level.buttons[6].active == true){
-				addText('Железная дверь без ручек и замков. Выглядит достаточно прочной!');
+				addText('Аккуратный квадратик черного пластика без надписей.');
+			}
+			if (level.buttons[7].active == true) {
+				addText('Куда?');
+				use_item(button,elem);
 			}
 		}
 		if (button == 13) {//Дверь
@@ -783,12 +833,26 @@ function start_level(level_name) {
 				addText('Дверь заперта!');
 			}
 			if (level.buttons[6].active == true){
-				addText('Железная дверь без ручек и замков. Выглядит достаточно прочной!');
+				addText('Ровный лист металла с небольшой щелью там где бывает ручка двери.');
+			}
+			if (level.buttons[7].active == true && level.buttons[12].active == true) {
+				addText('Вы вышли из комнаты. Поздравяем, вы победили. Пожалуйста, пройдите в комнату стерилизации для получения приза!');
+				end_game('win');
 			}
 		}
 	}
 }
 
+function end_game(result) {
+	if (result == 'win') {
+		var main_w = document.getElementById('main-div');
+		main_w.innerHTML = 'YOU WIN';
+		main_w.style.fontSize = '200pt';
+	}
+	else if (result == 'lose') {
+	
+	}
+}
 function load_game() {
 	
 }
