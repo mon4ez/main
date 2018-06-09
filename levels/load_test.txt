@@ -33,7 +33,7 @@
 			"id":7,"label":"Осмотреть","type":"player","visible":true,"active":false,"chain":2
 		},
 		{
-			"id":8,"label":"Вставить","type":"object","visible":true,"active":false,"chain":3
+			"id":8,"label":"Вставить","type":"player","visible":true,"active":false,"chain":3
 		},
 		{
 			"id":9,"label":"Окно","type":"object","visible":true,"active":false,"chain":1
