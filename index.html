@@ -270,8 +270,7 @@ var loadGame = function(){
 
 function new_game() {
 	document.getElementById("main-menu").style.display = "none";
-	
-	//Создаем нового игрока
+	document.getElementById("logo").style.display = "none";
 	
 	//Запускаем игрока в комнату
 	currentRoom = room1;
@@ -304,7 +303,7 @@ function soundPlayer (name) {
 	}
 }
 var audio = new Audio();
-soundPlayer('samosbor_intro');
+//soundPlayer('samosbor_intro');
 
 
 //С этой части документа начинает вторая версия написания игры использую загрузку данных из json
@@ -322,6 +321,10 @@ soundPlayer('samosbor_intro');
 		<li class="button"> <span id="musicButton" onClick="soundPlayer(null)">Музыка &#9658;</span></li>
 		<li class="button"> <a href=''>Выход в главное меню </a></li>
 	</ul>
+	<div id="logo">
+		<span id="logo_name">Самосбор</span>
+		<span id="splash">Прикюченческий текстовый квест</span>
+	</div>
 	<div id="main-menu">
 		<div class="button" onClick="new_game()">Новая игра</div>
 		<div class="button" onClick="start_level('load_test')">Лаборатория САМОСБОРА</div>
