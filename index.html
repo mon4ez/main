@@ -40,7 +40,10 @@ var gameView = {
   click_buffer : [],
   showText : function(txt) {
   	$('#actualText').append('<br>'+txt);
-	t_scroll = document.getElementById("actualText").scrollHeight
+	if (typeof(document.getElementById("actualText")) != 'undefined') {
+			t_scroll = document.getElementById("actualText").scrollHeight
+	}
+
 	$('#actualText').scrollTop(t_scroll);
   },
   execute : function(cmd) {
@@ -266,6 +269,7 @@ var loadGame = function(){
     }
     gameView.rebuild();
 	}
+	
 }
 
 function new_game() {
@@ -277,8 +281,36 @@ function new_game() {
 	currentRoom = room1;
 	gameInterface(currentRoom);
 	gameView.rebuild();
+	//soundPlayer(samosbor_intro);
 }
 
+var music_played = 0;
+function soundPlayer (name) {
+	
+console.log(name);	
+	if (name == null) {
+		if (music_played == 1) {
+			music_played = 0;
+			audio.pause();
+			$("#musicButton").html('Музыка &#9658');	
+
+		}
+		else {
+			audio.play();
+			music_played = 1;
+			$("#musicButton").html('Музыка &#9209');	
+		}
+	}
+	else {
+		audio.preload = 'auto';
+		audio.src = 'audio/'+name+'.mp3';
+		audio.play();
+		music_played = 1;
+		$("#musicButton").html('Музыка &#9209');	
+	}
+}
+var audio = new Audio();
+soundPlayer('samosbor_intro');
 
 
 //С этой части документа начинает вторая версия написания игры использую загрузку данных из json
@@ -291,8 +323,9 @@ function new_game() {
 
 <div id="main-div" ondblclick="" onselectstart="return false" onmousedown="return false">
 	<ul id="system_menu" class="button">
-		<li class="button"> <a href=# onClick="saveGame()">Сохранить игру </a></li>
-		<li class="button"> <a href=# onClick="loadGame()">Загрузить игру </a></li>
+		<li class="button"> <a href=# onClick="saveGame()">Сохранить игру</a></li>
+		<li class="button"> <a href=# onClick="loadGame()">Загрузить игру</a></li>
+		<li class="button"> <a id="musicButton" href=# onClick="soundPlayer(null)">Музыка &#9658;</a></li>
 		<li class="button"> <a href=''>Выход в главное меню </a></li>
 	</ul>
 	<div id="main-menu">
