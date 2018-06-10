@@ -306,7 +306,23 @@ var audio = new Audio();
 //soundPlayer('samosbor_intro');
 
 
-//С этой части документа начинает вторая версия написания игры использую загрузку данных из json
+var changeSplash = function() {
+	var spl = $('<span id="splash"></span>');
+	$('#logo').append(spl);
+	splash_array = [
+	'проверь герметичность двери!',
+	'содержи ОЗК в чистоте!',
+	'о случаях заражения немедленно сообщай дежурному по этажу!',
+	'распространение недостоверной информации о самосборе недопустимо!',
+	'следуй только известными маршрутами!'
+	];
+	rand = Math.floor(Math.random() * (0 + splash_array.length));
+	$('#splash').html(splash_array[rand]);
+	console.log(splash_array[rand]);
+
+}
+
+
 
 </script>
 <title>ВНИМАНИЕ НАЧИНАЕТСЯ САМОСБОР</title>
@@ -323,7 +339,6 @@ var audio = new Audio();
 	</ul>
 	<div id="logo">
 		<span id="logo_name">Самосбор</span>
-		<span id="splash">Приключенческий текстовый квест</span>
 	</div>
 	<div id="main-menu">
 		<div class="button" onClick="new_game()">Новая игра</div>
@@ -333,4 +348,7 @@ var audio = new Audio();
 </div>
 
 </body>
+<script>
+changeSplash();
+</script>
 </html>
