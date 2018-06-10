@@ -40,7 +40,8 @@ var gameView = {
   click_buffer : [],
   showText : function(txt) {
   	$('#actualText').append('<br>'+txt);
-	$('#actualText').scrollTop($('#actualText').height());
+	t_scroll = document.getElementById("actualText").scrollHeight
+	$('#actualText').scrollTop(t_scroll);
   },
   execute : function(cmd) {
     console.log('executing: ' + cmd);
