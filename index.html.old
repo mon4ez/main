@@ -1,0 +1,893 @@
+<html>
+<head>
+<!--<script type="text/javascript" src="main/scripts/jquery-3.3.1.min.js">-->
+</script>
+	
+<script> 
+/* *** Доступные функции *** 
+addText(text) - добавляет текст в текстовую область
+function changeStatus(param,stat) - изменение параметров статуса игрока. param: 0 здоровье, 1 положение тела. stat - bodyStatus
+check_actions() - обновить кнопки игрока
+check_roomObjects() - обновить кнопки комнаты
+
+use_object(id,element) - вызывается для использования объекта. id вызывающей кнопки, DOM объект
+use_item(id,element) - вызывается для использования предмета
+
+
+*/
+
+
+var game_url = 'https://samosborthegame.github.io/main/';
+
+document.oncontextmenu = function (){return false};
+
+var Player = function(name){
+	this.name = name;
+	this.age = '18';
+	this.health = 100;
+	this.getHealth = function() {
+		return "Здоровье:" + this.health + "%";
+	}
+	this.bodyStatus = ['Стоит','Сидит','Лежит'];
+	this.currentBodyStatus = 0;
+	
+	function Actions(id,name) {
+		this.id = id;
+		this.name = name;
+		this.available = true;
+		this.activate = function () {
+			this.available = true;
+		}
+		this.deactivate = function () {
+			this.available = false;
+		}
+		this.flag = false;
+	}
+	this.actionsArray = [];
+	this.actionsArray[0] = new Actions ('0','Прилечь');
+	this.lie = this.actionsArray[0];
+	this.actionsArray[1] = new Actions ('1','Присесть');
+	this.sit = this.actionsArray[1];
+	this.actionsArray[2] = new Actions ('2','Встать');
+	this.getup = this.actionsArray[2];
+	this.actionsArray[3] = new Actions ('3','Подпрыгнуть');
+	this.jump = this.actionsArray[3];
+	this.actionsArray[4] = new Actions ('4','Открыть+1');
+	this.open = this.actionsArray[4];
+	this.actionsArray[5] = new Actions ('5','Взять+1');
+	this.take = this.actionsArray[5];
+	this.actionsArray[6] = new Actions ('6','Осмотреть+1');
+	this.inspect = this.actionsArray[6];
+	this.actionsArray[7] = new Actions ('7','Вставить+2');
+	this.insert = this.actionsArray[7];
+}
+
+var Button = function (label,type,id){
+	this.id = id;
+	this.label = label;
+	this.type = type;
+	this.visible = true;
+	this.setVisible = function () {
+		this.visible = true;
+	}
+	this.setUnvisible = function () {
+		this.visible = false;
+	}
+	this.active = false;
+	this.setActive = function () {
+		this.active = true;
+	}
+	this.setInnactive = function () {
+		this.active = false;
+	}
+	this.cssClass = function() {
+		if (this.visible) {
+			return 'button_flaged';
+		}
+		else {
+			return 'button';
+		}
+	}
+	this.chain = function() {
+		if (type == 'player'){
+			return this.chain = 1;
+		}
+		else if (type == 'object') {
+			return this.chain = 2;
+		}
+		else {
+			return this.chain = 3;
+		}
+	}
+}
+
+var Room = function(title, adress, startText) {
+	this.title = title;
+	this.adress = adress;
+	this.img = 'none';
+	this.text = startText;
+	this.setText = function(text) {
+		this.text = text;
+	}
+	this.activeObjectsArray = [];
+}
+
+function ActiveObject (id,name,active) {
+	this.id = id;
+	this.name = name;
+	this.available;
+	this.isUsed = false;
+	if (typeof active != 'undefined') {
+		this.available = active;
+	}
+	else {
+		this.available = true;
+	}
+	this.activate = function () {
+		this.available = true;
+	}
+	this.deactivate = function () {
+		this.available = false;
+	}
+}
+
+
+
+function new_game() {
+	document.getElementById("main-menu").style.display = "none";
+	
+	//Создаем нового игрока
+	
+	//Запускаем игрока в комнату
+	first_room();
+	
+}
+
+
+
+//Создаем комнату
+function first_room() {
+	var player = new Player('Сычев');
+	//Наполняем комнату
+	var room_test = new Room('Клетка Сыча','Этаж 522, сектор Г', 'Вы в пустой комнате. Стальная дверь без ручки без замка. Обычное пластиковое окно с подоконником, но за окном - кирпичная кладка. На полу ковер.<br>');
+	room_test.img = 'img/back/lol5.png';
+	//наполняем интерфейс
+	var main_w = document.getElementById('main-div');
+	main_w.style.backgroundImage = backgroundImage = "url("+room_test.img+")";;
+	
+	var room_title = document.createElement('div');
+	room_title.id = 'room_title';
+	room_title.className +=" pre";
+	main_w.appendChild(room_title);
+	room_title.innerHTML = room_test.title + ' : ' + room_test.adress;
+	
+	var room_image = document.createElement('div');
+	room_image.id = 'room_image';
+	//room_image.className +=" pre";
+	
+	main_w.appendChild(room_image);
+	//room_image.innerHTML = '<img src="' + room_test.img + '">'
+	
+	var room_image_padding = document.createElement('div');
+	room_image_padding.id = 'room_image_padding';
+	room_image_padding.className +=" pre";
+	room_image.appendChild(room_image_padding);
+	
+	var room_textArea = document.createElement('div');
+	room_textArea.id = 'room_textArea';
+	room_textArea.className +=" pre";
+	room_image.appendChild(room_textArea);
+	
+		var actualText_back = document.createElement('div');
+		actualText_back.id = 'actualText_back';
+		room_textArea.appendChild(actualText_back);
+		
+		var actualText = document.createElement('div');
+		actualText.id = 'actualText';
+		actualText.className +=" pre";
+		actualText.innerHTML = room_test.text;
+		room_textArea.appendChild(actualText);
+		
+		var playerStatus_back = document.createElement('div');
+		playerStatus_back.id = 'playerStatus_back';
+		playerStatus_back.className +=" pre";
+		room_textArea.appendChild(playerStatus_back);
+		
+		var playerStatus = document.createElement('div');
+		playerStatus.id = 'playerStatus';
+		playerStatus.className +=" pre";
+		room_textArea.appendChild(playerStatus);
+			
+			var namePlayerStatus = document.createElement('div');
+			namePlayerStatus.id = 'namePlayerStatus';
+			namePlayerStatus.className = "pre";
+			namePlayerStatus.innerHTML = player.name;
+			playerStatus.appendChild(namePlayerStatus);
+			
+			var healthPlayerStatus = document.createElement('div');
+			healthPlayerStatus.id = 'healthPlayerStatus';
+			healthPlayerStatus.className = "pre";
+			healthPlayerStatus.innerHTML = player.getHealth();
+			playerStatus.appendChild(healthPlayerStatus);
+			
+			var bodyPlayerStatus = document.createElement('div');
+			bodyPlayerStatus.id = 'bodyPlayerStatus';
+			bodyPlayerStatus.className = "pre";
+			bodyPlayerStatus.innerHTML = player.bodyStatus[0];
+			playerStatus.appendChild(bodyPlayerStatus);
+	
+	var room_actions = document.createElement('div');
+	room_actions.id = 'room_actions';
+	room_actions.className +=" pre";
+	room_image.appendChild(room_actions);
+		
+		var playerActions = document.createElement('div');
+		playerActions.id = 'playerActions';
+		playerActions.className +=" pre";
+		room_actions.appendChild(playerActions);
+		
+		var roomActions = document.createElement('div');
+		roomActions.id = 'roomActions';
+		roomActions.className +=" pre";
+		room_actions.appendChild(roomActions);
+
+	
+	//распихиваем действия игрока по кнопкам
+	function check_actions() {
+		playerActions.innerHTML = '';
+		for (i=0;i<player.actionsArray.length;i++) {
+			if (player.actionsArray[i].available == true) {
+				var button = document.createElement('div');
+				button.id = 'action'+player.actionsArray[i].id;
+				button.className = "button pre";
+				button.style.position = "absolute";
+				button.style.height = "25px";
+				button.style.width = "140px";
+				if (i % 2) {
+					button.style.left = "160px";
+					button.style.top = (i-1) * 20 + 4 + 'px';
+				}
+				else {
+					button.style.left = "5px";
+					button.style.top = i * 20 + 4 + 'px';
+				}
+				playerActions.appendChild(button);
+				button.innerHTML = player.actionsArray[i].name;
+				//if (i % 2) room_actions.innerHTML += '<br>';
+			}
+		}
+	}
+	check_actions();
+	function lie() {
+		if (player.currentBodyStatus == 2) {
+			actualText.innerHTML += "@<p>Вы уже лежите</p>"
+		}
+		else {
+			player.currentBodyStatus = 2;
+			bodyPlayerStatus.innerHTML = player.bodyStatus[2];
+			addText("Вы легли");
+		}
+	}
+	function getUp() {
+		if (player.currentBodyStatus == 0) {
+			addText("Вы уже стоите");
+		}
+		else {
+			player.currentBodyStatus = 0;
+			bodyPlayerStatus.innerHTML = player.bodyStatus[0];
+			addText("Вы встали");
+		}
+	}
+	var sitcount =0;
+	function sit() {
+		sitcount
+		if (player.currentBodyStatus == 1) {
+			if (sitcount == 2) {
+				addText("Фуфлыжно сидите!");
+			}
+			else if (sitcount == 3) {
+				addText("Как фуфел!!!");
+			}
+			else {
+				addText("Вы уже сидите");
+			}
+			sitcount++;
+		}
+		else {
+			player.currentBodyStatus = 1;
+			bodyPlayerStatus.innerHTML = player.bodyStatus[1];
+			addText("Вы сели");
+			sitcount = 1;
+		}
+	}
+	function jump() {
+		player.currentBodyStatus = 0;
+		bodyPlayerStatus.innerHTML = player.bodyStatus[0];
+		addText("Вы подпрыгнули. Ничего не произошло");
+	}
+	
+	//активируем действия для объектов
+	function use(action_id,elem) {
+		switch (action_id) {
+		case '4':
+			player.open.flag = true;
+			player.take.flag = false;
+			player.inspect.flag = false;
+			player.insert.flag = false;
+			break;
+		case '5':
+			player.open.flag = false;
+			player.take.flag = true;
+			player.inspect.flag = false;
+			player.insert.flag = false;
+			break;
+		case '6':
+			player.open.flag = false;
+			player.take.flag = false;
+			player.inspect.flag = true;
+			player.insert.flag = false;
+			break;
+		case '7':
+			player.open.flag = false;
+			player.take.flag = false;
+			player.inspect.flag = false;
+			player.insert.flag = true;
+			break;
+		} 
+		//красим только активированное действие			
+		elements = document.getElementsByClassName('button_flaged')
+		if (elem.className == "pre button_flaged") {
+			for (i=0;i<elements.length;i++) {
+				elements[i].className = "pre button";
+			}
+			player.open.flag = false;
+			player.take.flag = false;
+			player.inspect.flag = false;
+			player.insert.flag = false;
+		}
+		else {
+			//alert(elem.className);
+			for (i=0;i<elements.length;i++) {
+				elements[i].className = "pre button";
+			}
+			elem.className = "pre button_flaged";
+			
+		}
+	}
+	
+	document.getElementById('action'+player.lie.id).onclick=function(){ lie(); };
+	document.getElementById('action'+player.getup.id).onclick=function(){ getUp(); };
+	document.getElementById('action'+player.sit.id).onclick=function(){ sit(); };
+	document.getElementById('action'+player.jump.id).onclick=function(){ jump(); };
+	document.getElementById('action'+player.open.id).onclick=function(){ use(player.open.id,this); };
+	document.getElementById('action'+player.take.id).onclick=function(){ use(player.take.id,this); };
+	document.getElementById('action'+player.inspect.id).onclick=function(){ use(player.inspect.id,this); };
+	document.getElementById('action'+player.insert.id).onclick=function(){ use(player.insert.id,this); };
+	
+	//Распихиваем объектры для взаимодействия
+	room_test.activeObjectsArray[0] = new ActiveObject(0,'дверь',true);
+	room_test.activeObjectsArray[1] = new ActiveObject(1,'окно',true);
+	room_test.activeObjectsArray[2] = new ActiveObject(2,'ковер',true);
+	room_test.activeObjectsArray[3] = new ActiveObject(3,'подоконник',false);
+	room_test.activeObjectsArray[4] = new ActiveObject(4,'записка',false);
+
+	
+	//расставляем кнопки объектов в комнате
+	function check_roomObjects () {
+		roomActions.innerHTML = '';
+		for (i=0;i<room_test.activeObjectsArray.length;i++) {
+			if (room_test.activeObjectsArray[i].available == true) {
+				var button = document.createElement('div');
+				button.id = 'actionRoom'+room_test.activeObjectsArray[i].id;
+				button.className = "button pre";
+				button.style.position = "absolute";
+				button.style.height = "25px";
+				button.style.width = "140px";
+				if (i % 2) {
+					button.style.left = "160px";
+					button.style.top = (i-1) * 20 + 4 + 'px';
+				}
+				else {
+					button.style.left = "5px";
+					button.style.top = i * 20 + 4 + 'px';
+				}
+				
+				roomActions.appendChild(button);
+				button.innerHTML = room_test.activeObjectsArray[i].name;
+			}
+		}
+		document.getElementById('actionRoom'+room_test.activeObjectsArray[0].id).onclick=function(){ door(); };
+		document.getElementById('actionRoom'+room_test.activeObjectsArray[1].id).onclick=function(){ window(); };
+		document.getElementById('actionRoom'+room_test.activeObjectsArray[2].id).onclick=function(){ carpet(); };
+	}
+	check_roomObjects();
+	
+	
+	
+	function door() {
+		if (player.open.flag == true) {
+			addText('Дверь заперта');
+		}
+		if (player.take.flag == true) {
+			addText('Ничего не выйдет');
+		}
+		if (player.inspect.flag == true) {
+			addText('Железная дверь без ручек и замков. Выглядит достаточно прочной');
+		}
+		if (player.insert.flag == true) {
+			addText('Что бы вставить?');
+		}
+	}
+	function window() {
+		if (player.open.flag == true) {
+			addText('Окно закрыто');
+		}
+		if (player.take.flag == true) {
+			addText('Ничего не выйдет');
+		}
+		if (player.inspect.flag == true) {
+			addText('За окном кирпичная кладка. Стекло треснуто.');
+			room_test.activeObjectsArray[3].available = true;
+			check_roomObjects();
+			document.getElementById('actionRoom'+room_test.activeObjectsArray[3].id).onclick=function(){ window_down(); };
+		}
+		if (player.insert.flag == true) {
+			addText('Что бы вставить?');
+		}
+	}
+	function window_down() {
+		if (player.open.flag == true) {
+			addText('Что открыть?');
+		}
+		if (player.take.flag == true) {
+			addText('Нечего взять');
+		}
+		if (player.inspect.flag == true) {
+			if (player.currentBodyStatus == 1) {
+				addText('Под подоконником в монтажной пене торчит карточка');
+			}
+			else {
+				addText('На подоконнике кровавые отпечатки пальцев.');
+			}
+		}
+		if (player.insert.flag == true) {
+			addText('Что бы вставить?');
+		}
+	}
+	function carpet() {
+		if (player.open.flag == true) {
+			addText('Что открыть?');
+		}
+		if (player.take.flag == true) {
+			addText('Под ковром записка.');
+		}
+		if (player.inspect.flag == true) {
+			addText('Обычный персидский ковер. С пятнами крови.');
+		}
+		if (player.insert.flag == true) {
+			addText('Что бы вставить?');
+		}
+	}
+	console.log(JSON.stringify(player));
+	
+	
+}
+
+//С этой части документа начинает вторая версия написания игры использую загрузку данных из json
+function load_interface(level) {
+	
+	var main_w = document.getElementById('main-div');
+	main_w.style.backgroundImage = "url("+level.img+")";
+	
+	var room_title = document.createElement('div');
+	room_title.id = 'room_title';
+	main_w.appendChild(room_title);
+	room_title.innerHTML = level.title + ' : ' + level.address;
+	
+	var room_image = document.createElement('div');
+	room_image.id = 'room_image';
+	main_w.appendChild(room_image);
+	
+	var room_image_padding = document.createElement('div');
+	room_image_padding.id = 'room_image_padding';
+	room_image.appendChild(room_image_padding);
+	
+	var room_textArea = document.createElement('div');
+	room_textArea.id = 'room_textArea';
+	room_image.appendChild(room_textArea);
+	
+		var actualText_back = document.createElement('div');
+		actualText_back.id = 'actualText_back';
+		room_textArea.appendChild(actualText_back);
+		
+		var actualText = document.createElement('div');
+		actualText.id = 'actualText';
+		actualText.innerHTML = level.text + '<br>';
+		room_textArea.appendChild(actualText);
+		
+		var playerStatus_back = document.createElement('div');
+		playerStatus_back.id = 'playerStatus_back';
+		room_textArea.appendChild(playerStatus_back);
+		
+		var playerStatus = document.createElement('div');
+		playerStatus.id = 'playerStatus';
+		room_textArea.appendChild(playerStatus);
+			
+			var namePlayerStatus = document.createElement('div');
+			namePlayerStatus.id = 'namePlayerStatus';
+			namePlayerStatus.innerHTML = level.player.name;
+			playerStatus.appendChild(namePlayerStatus);
+			
+			var healthPlayerStatus = document.createElement('div');
+			healthPlayerStatus.id = 'healthPlayerStatus';
+			healthPlayerStatus.innerHTML = level.player.health +"%";
+			playerStatus.appendChild(healthPlayerStatus);
+			
+			var bodyPlayerStatus = document.createElement('div');
+			bodyPlayerStatus.id = 'bodyPlayerStatus';
+			bodyPlayerStatus.innerHTML = level.player.bodyStatus[level.player.currentBodyStatus];
+			playerStatus.appendChild(bodyPlayerStatus);
+			
+	var room_actions = document.createElement('div');
+	room_actions.id = 'room_actions';
+	room_image.appendChild(room_actions);
+		
+		var playerActions = document.createElement('div');
+		playerActions.id = 'playerActions';
+		room_actions.appendChild(playerActions);
+		
+		var roomActions = document.createElement('div');
+		roomActions.id = 'roomActions';
+		room_actions.appendChild(roomActions);
+		
+		var playerItems = document.createElement('div');
+		playerItems.id = 'playerItems';
+		room_actions.appendChild(playerItems);
+}
+
+//функция обновления текста
+function addText(text) {
+	actualText.innerHTML += '@<p>'+text+'</p>';
+	actualText.scrollTop = actualText.scrollHeight;
+}
+
+//функция обновления статуса персонажа
+function changeStatus(param,stat) {
+	if (param == 0) {//Здоровье
+		healthPlayerStatus.innerHTML = stat;
+	}
+	if (param == 1) {//Положение
+		bodyPlayerStatus.innerHTML = stat;
+	}
+}
+
+
+function start_level(level_name) {
+	
+	var load_level = function(level) {
+		var xhr  = new XMLHttpRequest;
+
+		xhr.open('GET', game_url+'levels/'+level+'.txt', false);
+
+		xhr.onload = function () {
+			//console.log(xhr.responseText);
+		};
+
+		xhr.send();
+		if (xhr.status != 200) {
+		  // обработать ошибку
+		  console.log( xhr.status + ': ' + xhr.statusText );
+		} else {
+		  // вывести результат
+			level_data = xhr.responseText; // responseText -- текст ответа.
+		}
+	}
+	load_level(level_name); //загружаем уровень 'load_test'
+	
+	var level = JSON.parse(level_data);
+	var player = level.player;
+	var stepCount = 0;
+	document.getElementById("main-menu").style.display = "none";
+	load_interface(level);
+	
+	//Кнопки игрока
+	function check_actions() {
+		playerActions.innerHTML = '';
+		for (i=0,x=0,y=0;i<level.buttons.length;i++) {
+			if (level.buttons[i].type == 'player' && level.buttons[i].visible) {
+				var button = document.createElement('div');
+				button.id = level.buttons[i].id;
+				button.className = "button";
+				button.style.position = "absolute";
+				button.style.height = "25px";
+				button.style.width = "140px";
+				if (i % 2) {
+					button.style.left = "160px";
+					button.style.top = y * 40 + 4 + 'px';
+					y++;
+				}
+				else {
+					button.style.left = "5px";
+					button.style.top = x * 40 + 4 + 'px';
+					x++;
+				}
+				playerActions.appendChild(button);
+				button.innerHTML = level.buttons[i].label;
+				button.onclick=function(){ object_action(this); };
+				
+			}
+		}
+	}
+	
+	//Кнопки объектов
+	function check_roomObjects () {
+		roomActions.innerHTML = '';
+		for (i=0,x=0,y=0;i<level.buttons.length;i++) {
+			if (level.buttons[i].type == 'object' && level.buttons[i].visible) {
+				var button = document.createElement('div');
+				button.id = level.buttons[i].id;
+				button.className = "button";
+				button.style.position = "absolute";
+				button.style.height = "25px";
+				button.style.width = "140px";
+				if (i % 2) {
+					button.style.left = "160px";
+					button.style.top = y * 40 + 4 + 'px';
+					y++;
+				}
+				else {
+					button.style.left = "5px";
+					button.style.top = x * 40 + 4 + 'px';
+					x++;
+				}
+				
+				roomActions.appendChild(button);
+				button.innerHTML = level.buttons[i].label;
+				//console.log(level.buttons[i].type);
+				button.onclick=function(){ object_action(this); };
+			}
+		}
+	}
+	//кнопки предметов
+	function check_item () {
+		playerItems.innerHTML = '';
+		for (i=0,x=0,y=0;i<level.buttons.length;i++) {
+			if (level.buttons[i].type == 'item' && level.buttons[i].visible) {
+				var button = document.createElement('div');
+				button.id = level.buttons[i].id;
+				button.className = "button";
+				button.style.position = "absolute";
+				button.style.height = "25px";
+				button.style.width = "140px";
+				if (i % 2) {
+					button.style.right = "160px";
+					button.style.top = y * 40 + 4 + 'px';
+					y++;
+				}
+				else if (i % 3) {
+					button.style.right = "310px";
+					button.style.top = y * 40 + 4 + 'px';
+					y++;
+				}
+				else {
+					button.style.right = "5px";
+					button.style.top = x * 40 + 4 + 'px';
+					x++;
+				}
+				
+				playerItems.appendChild(button);
+				button.innerHTML = level.buttons[i].label;
+				//console.log(level.buttons[i].type);
+				button.onclick=function(){ object_action(this); };
+			}
+		}
+	}
+	
+	check_actions();
+	check_roomObjects();
+	check_item();
+	//обработчик событий кнопок
+	function object_action(elem) {
+		var button = elem.id;
+		//console.log(button);
+		//console.log(level.buttons[button].label);
+		if (level.buttons[button].type == 'player') { //счетчик цепочки действий
+			var cCount = level.buttons[button].chain;
+		}
+		
+		function use_object(action_id,element) {
+			if (level.buttons[action_id].active == true) {
+				level.buttons[action_id].active = false;
+				element.className = "button";
+			}
+			else {
+				level.buttons[action_id].active = true;
+				for (i=0;i<level.buttons.length;i++) {
+					if (level.buttons[i].id != action_id && level.buttons[i].type == 'player') {
+						level.buttons[i].active = false;
+						document.getElementById(i).className = "button";
+					}
+				}
+				element.className = "button_flaged";
+				addText(level.buttons[action_id].label+'?');
+			}
+		}
+		function use_item(action_id,element) {
+			if (level.buttons[action_id].active == true) {
+				level.buttons[action_id].active = false;
+				element.className = "button";
+			}
+			else {
+				level.buttons[action_id].active = true;
+				for (i=0;i<level.buttons.length;i++) {
+					if (level.buttons[i].id != action_id && level.buttons[i].type == 'item') {
+						level.buttons[i].active = false;
+						console.log(i)
+						if (document.getElementById(i)) {
+							document.getElementById(i).className = "button";
+						}
+					}
+				}
+				element.className = "button_flaged";
+				//addText(level.buttons[action_id].label+'?');
+			}
+		}
+	//Логика кнопок
+	//Вот это вот все, надо бы как-то сделать менее зависимым от комнаты, хотя мне кажется это невозмножно.
+	//Можно попытаться сделать обработчик дежурных фраз, все остальное придется кодить для каждой комнаты.
+		if (button == 0) {//Встать
+			if (player.currentBodyStatus != 0) {
+				player.currentBodyStatus = 0;
+				changeStatus(1,player.bodyStatus[0]);
+				addText(level.phrases[0].text);
+			}
+			else {
+				addText('Вы уже стоите');
+			}
+		}
+		if (button == 1) {//Сесть
+			if (player.currentBodyStatus != 1) {
+				player.currentBodyStatus = 1;
+				changeStatus(1,player.bodyStatus[1]);
+				addText(level.phrases[1].text);
+			}
+			else {
+				addText('Вы уже сидите');
+			}
+		}
+		if (button == 2) {//Лечь
+			if (player.currentBodyStatus != 2) {
+				player.currentBodyStatus = 2;
+				changeStatus(1,player.bodyStatus[2]);
+				addText('Вы легли');
+			}
+			else {
+				addText('Вы уже лежите');
+			}
+		}
+		if (button == 3) {//Пригнуть
+			if (player.currentBodyStatus != 2) {
+				player.currentBodyStatus = 0;
+				changeStatus(1,player.bodyStatus[0]);
+				addText('Вы подпрыгнули, ничего не произошло');
+			}
+			else {
+				addText('Вы не можете прыгнуть из этого положения');
+			}
+		}
+		if (button == 4) {//Открыть
+			use_object(button,elem);
+		}
+		if (button == 5) {//Взять
+			use_object(button,elem);
+		}
+		if (button == 6) {//Осмотреть
+			use_object(button,elem);
+		}
+		if (button == 7) {//Вставить
+			use_object(button,elem);
+			
+		}
+		if (button == 8) {//Окно
+			if (level.buttons[6].active == true){
+				addText('За окном кирпичная кладка. Стекло треснуто.');
+				level.buttons[10].visible = true;
+				check_roomObjects();
+			}
+		}
+		if (button == 9) {//Ковер
+			if (level.buttons[5].active == true) {
+				addText('Под ковром записка.');
+				level.buttons[11].visible = true;
+				check_item();
+			}
+			if (level.buttons[6].active == true){
+				addText('Обычный персидский ковер. С пятнами крови.');
+			}
+		}
+		if (button == 10) {//Подоконник
+			if (level.buttons[6].active == true){
+				if (player.currentBodyStatus==1) {
+					addText('Под подоконником в монтажной пене торчит карточка');
+					level.buttons[12].visible = true;
+					check_item();
+				}
+				else {
+					addText('На подоконнике кровавые отпечатки пальцев.');
+				}
+			}
+		}
+		if (button == 11) {//Записка
+			if (level.buttons[5].active == true){
+				addText('Вы взяли записку. Корявым почерком выведено: ищи карточку.');
+			}
+		}
+		if (button == 12) {//Карточка
+			if (level.buttons[5].active == true){
+				addText('Вы достали карточку. Аккуратный квадратик черного пластика без надписей.');
+			}
+			if (level.buttons[6].active == true){
+				addText('Аккуратный квадратик черного пластика без надписей.');
+			}
+			if (level.buttons[7].active == true) {
+				addText('Куда?');
+				use_item(button,elem);
+			}
+		}
+		if (button == 13) {//Дверь
+			if (level.buttons[4].active == true) {
+				addText('Дверь заперта!');
+			}
+			if (level.buttons[6].active == true){
+				addText('Ровный лист металла с небольшой щелью там где бывает ручка двери.');
+			}
+			if (level.buttons[7].active == true && level.buttons[12].active == true) {
+				addText('Вы вышли из комнаты. Поздравяем, вы победили. Пожалуйста, пройдите в комнату стерилизации для получения приза!');
+				end_game('win');
+			}
+		}
+		stepCount++;
+		if (stepCount > 30) {
+			end_game('lose');
+		}
+	}
+}
+
+function end_game(result) {
+	if (result == 'win') {
+		var main_w = document.getElementById('main-div');
+		main_w.innerHTML = 'YOU WIN';
+		main_w.style.fontSize = '200pt';
+		main_w.style.color = 'red';
+	}
+	else if (result == 'lose') {
+		var main_w = document.getElementById('main-div');
+		main_w.innerHTML = 'YOU DIED';
+		main_w.style.fontSize = '170pt';
+		main_w.style.color = 'red';
+	}
+}
+function load_game() {
+	
+}
+</script>
+<title>ВНИМАНИЕ НАЧИНАЕТСЯ САМОСБОР</title>
+<link rel="stylesheet" href="css/minetheme.css">
+</head>
+<body>
+
+<div id="main-div" ondblclick="" onselectstart="return false" onmousedown="return false">
+	<ul id="system_menu" class="button">
+		<li class="button"> <a href=#>Сохранить игру </a></li>
+		<li class="button"> <a href=#>Загрузить игру </a></li>
+		<li class="button"> <a href=''>Выход в главное меню </a></li>
+	</ul>
+	<div id="main-menu">
+		<div class="button" onClick="new_game()">Новая игра</div>
+		<div class="button" onClick="start_level('load_test')">Лаборатория САМОСБОРА</div>
+		<!--<a class="a_button" onClick="load_game()" href="#">Загрузить игру</a>-->
+	</div>
+</div>
+
+</body>
+</html>

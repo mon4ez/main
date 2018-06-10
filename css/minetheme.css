@@ -119,6 +119,13 @@ background-size: 100%;
 	position:absolute;
 	right:4px;
 }
+#cmd {
+	position: absolute;
+	top:137px;
+	width: 1200px;
+	height: 40px;
+	font-size: 15pt;
+}
 
 #system_menu {
 	position:absolute;
