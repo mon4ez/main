@@ -121,10 +121,14 @@ background-size: 100%;
 }
 #cmd {
 	position: absolute;
-	top:137px;
-	width: 1200px;
-	height: 40px;
+	top:143px;
+	width: 1193px;
+	height: 30px;
 	font-size: 15pt;
+	margin: 0px;
+	padding-left:7px;
+	padding-top:7px;
+	background-color: #46485E;
 }
 
 #system_menu {
