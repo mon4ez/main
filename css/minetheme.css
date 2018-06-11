@@ -151,7 +151,7 @@ p.tab {
 	font-weight:bold;
 	color:black;
 	text-align: left;
-	font-family: 'Georgia';
+	font-family: PT Serif;
 }
 #actualText_back {
 	height:200px;
@@ -258,7 +258,7 @@ li a {
 	/*color: black;*/
 	border-radius: 5px;
 	border: 1px solid black;
-	font-family: Arvo, 'Time News Roman';
+	font-family: PT Serif;
 }
 
 .button:hover {
@@ -279,9 +279,11 @@ li a {
 	border-radius: 5px;
 }
 .textBold {
-	font-family: Arvo, Time News Roman;
+	font-family: Lucida Console;
 	position:relative;
 	left:-12px;
+	font-weight: bold;
+	color: #212624;
 }
 .a_button:link {
     text-decoration: none;
