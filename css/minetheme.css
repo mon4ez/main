@@ -14,6 +14,14 @@
 	src: url(fonts/a_RubricaCn_Bold.ttf);
 }
 
+@font-face {
+	font-family: ArvoBold_Bold;
+	src: url(fonts/ArvoBold_Bold.ttf);
+	
+	font-weight: bold;
+    font-style: normal;
+}
+
 body {
 	background-color: #282B30;
 	background-image: url(img/index.jpg);
@@ -202,7 +210,7 @@ p {
 	margin: 0px;
 	padding-left:7px;
 	padding-top:7px;
-	background-color: #46485E;
+	background-color: #646782;
 }
 
 #system_menu {
@@ -266,6 +274,9 @@ li a {
 	color: black;
 	border: 1px solid red;
 	border-radius: 5px;
+}
+.textBold {
+	font-family: ArvoBold_Bold;
 }
 .a_button:link {
     text-decoration: none;

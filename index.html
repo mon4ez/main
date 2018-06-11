@@ -52,7 +52,7 @@ var gameView = {
     this.click_buffer = [];
     $('#cmd').fadeOut(1000);
     var validAction = currentRoom.actions.hasOwnProperty(cmd);
-    this.showText('<i>&gt;' + cmd + '</i>');
+    this.showText('<span class="textBold">&gt;' + cmd + '</span>');
     if (!validAction) {
     	this.showText('What?'); // это реакция на действие которое не было прописано в комнате
     } else {
@@ -93,9 +93,9 @@ var gameView = {
       if (!butt.visible) continue;
       var btn = $('<button class="button">'+butt.name+'</button>');
     	$('#playerActions').append(btn);
-      if (butt.chain_length == 0) btn.css('background', '#1c4163');
-      else if (butt.chain_length == 1) btn.css('background', '#783617');
-      else if (butt.chain_length == 2) btn.css('background', '#184f38');
+      if (butt.chain_length == 0) btn.css('background', '#3d678f');
+      else if (butt.chain_length == 1) btn.css('background', '#a66344');
+      else if (butt.chain_length == 2) btn.css('background', '#438f6f');
       if (butt.hasOwnProperty('highlight') && butt.highlight) btn.css('background', '#63271c');
       var _this = this;
       btn.click(function(){
