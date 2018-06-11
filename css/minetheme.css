@@ -5,6 +5,7 @@
 body {
 	background-color: #282B30;
 	background-image: url(img/index.jpg);
+	background-size: 100%;
 }
 p {
 	line-height: 0.9em;
