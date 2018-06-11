@@ -106,7 +106,10 @@ p {
 	border-top:0px;
 	border-radius:0 0 10px 10px;
 	background-color:#777E76;
-	text-shadow: #2A0017 0 0 2px;
+	text-shadow: 1px 1px 0 #424230,
+            1px -1px 0 #424230,
+            -1px 1px 0 #424230,
+            -1px -1px 0 #424230;
 }
 #room_image {
 	height:600px;
@@ -137,6 +140,7 @@ p {
 	font-weight:bold;
 	color:black;
 	text-align: center;
+	font-family: Georgia;
 }
 #actualText_back {
 	height:200px;
@@ -233,7 +237,7 @@ li a {
 	/*color:black;*/
 }
 .button {
-	color: black;
+	color: #212624;
 	transition: all 0.4s;
 	font-size: 18pt;
 	padding: 4px;
