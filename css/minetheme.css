@@ -122,7 +122,7 @@ p {
 	font-size: 14pt;
 	font-weight:bold;
 	color:black;
-	/*text-align: center;*/
+	text-align: center;
 }
 #actualText_back {
 	height:200px;

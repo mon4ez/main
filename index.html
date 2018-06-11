@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script type="text/javascript" src="scripts/jquery-3.3.1.min.js">
-</script>
+<script type="text/javascript" src="scripts/jquery-3.3.1.min.js"></script>
 	
 <script> 
 /* *** Доступные функции *** 
@@ -315,7 +314,12 @@ var changeSplash = function() {
 	'содержи ОЗК в чистоте!',
 	'о случаях заражения немедленно сообщай дежурному по этажу!',
 	'распространение недостоверной информации о самосборе недопустимо!',
-	'следуй только известными маршрутами!'
+	'следуй только известными маршрутами!',
+	'Будь бдителен!',
+	'Помни, за гермодверью людей не остаётся, не верь мольбам тварей!',
+	'Вступай в ликвидаторы!',
+	'Регулярно проводи ревизию своей жилячейки на предмет наличия плесени!',
+	'Ликвидатор, помни. Хрущевка-мать зовет'
 	];
 	rand = Math.floor(Math.random() * (0 + splash_array.length));
 	$('#splash').html(splash_array[rand]);
@@ -327,7 +331,9 @@ var changeSplash = function() {
 
 </script>
 <title>ВНИМАНИЕ НАЧИНАЕТСЯ САМОСБОР</title>
-<link rel="stylesheet" href="css/minetheme.css">
+<link rel="stylesheet" type="text/css" href="css/minetheme.css">
+<link rel="stylesheet" type="text/css" href="css/jquery.jscrollpane.css">
+
 </head>
 <body>
 
@@ -355,7 +361,8 @@ var changeSplash = function() {
 
 </body>
 <script>
-$('#video_bg').play();
+
 changeSplash();
+
 </script>
 </html>
