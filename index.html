@@ -332,8 +332,8 @@ var changeSplash = function() {
 <body>
 
 <div id="main-div" ondblclick="" onselectstart="return false" onmousedown="return false">
-	<video id="video_bg" autoplay="autoplay" loop="loop">
-		<source src="img/index.mp4" type="video/mp4"></source>
+	<video id="video_bg" height="auto" autoplay muted loop="loop" preload="auto">
+		<source src="img/index.mp4"></source>
 		<source src="img/index.webm" type="video/webm"></source>
 		 Your browser does not support the video tag.
 	</video>
@@ -355,6 +355,7 @@ var changeSplash = function() {
 
 </body>
 <script>
+$('#video_bg').play();
 changeSplash();
 </script>
 </html>
