@@ -249,6 +249,10 @@ li a {
 }
 .button:hover {
 	background-color: gray;
+	/*text-shadow: #F7FF00 1px 1px 16px;*/
+	transition: all 0.5s;
+	 text-shadow: -1px -1px #000,
+               0 1px 0 #dfe300;
 }
 
 .a_button:link {
