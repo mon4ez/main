@@ -229,16 +229,29 @@ li a {
 	/*color:black;*/
 }
 .button {
+	  text-shadow: -1px -1px #000,
+               0 1px 0 #444;
+	  color: #222;
+	  transition: all 1s;
 	font-size: 18pt;
 	padding: 4px;
 	cursor: pointer;
 	text-align: center;
 	background-color: #726A68;
-	color: black;
+	/*color: black;*/
 	border-radius: 5px;
 	border: 1px solid black;
 	font-family: RubricaCn, 'Time News Roman';
 }
+
+.button:hover {
+	background-color: gray;
+	/*text-shadow: #F7FF00 1px 1px 16px;*/
+   text-shadow: -1px -1px #000,
+               0 1px 0 #444;
+    color: yellow;
+}
+
 .button_flaged {
 	font-size: 15pt;
 	padding: 4px;
@@ -249,14 +262,6 @@ li a {
 	border: 1px solid red;
 	border-radius: 5px;
 }
-.button:hover {
-	background-color: gray;
-	/*text-shadow: #F7FF00 1px 1px 16px;*/
-	transition: all 0.5s;
-	 text-shadow: -1px -1px #000,
-               0 1px 0 #dfe300;
-}
-
 .a_button:link {
     text-decoration: none;
 }
