@@ -3,8 +3,11 @@
 	src: url(fonts/Red_October.ttf);
 }
 @font-face {
-	font-family: a_AlternaNr;
-	src: url(fonts/a_AlternaNr.ttf);
+	font-family: Arvo;
+	src: url(fonts/Arvo.ttf);
+	
+	font-weight: normal;
+    font-style: normal;
 }
 @font-face {
 	font-family: RubricaCn;
@@ -15,7 +18,7 @@ body {
 	background-color: #282B30;
 	background-image: url(img/index.jpg);
 	background-size: 100%;
-	font-family: RubricaCn, 'Time News Roman';
+	font-family: Arvo, 'Time News Roman';
 }
 p {
 	line-height: 0.9em;
@@ -68,6 +71,7 @@ p {
 	margin-top:210px;
 	font-size: 25pt;
 	text-align: center;
+	font-family: RubricaCn, 'Time News Roman';
 }
 #main-div {
 	color: black;
@@ -229,10 +233,8 @@ li a {
 	/*color:black;*/
 }
 .button {
-	  text-shadow: -1px -1px #000,
-               0 1px 0 #444;
-	  color: #222;
-	  transition: all 1s;
+	color: black;
+	transition: all 0.4s;
 	font-size: 18pt;
 	padding: 4px;
 	cursor: pointer;
@@ -241,13 +243,12 @@ li a {
 	/*color: black;*/
 	border-radius: 5px;
 	border: 1px solid black;
-	font-family: RubricaCn, 'Time News Roman';
+	font-family: Arvo, 'Time News Roman';
 }
 
 .button:hover {
 	background-color: gray;
-	/*text-shadow: #F7FF00 1px 1px 16px;*/
-   text-shadow: -1px -1px #000,
+    text-shadow: -1px -1px #000,
                0 1px 0 #444;
     color: yellow;
 }
