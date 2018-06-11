@@ -2,6 +2,10 @@
 	font-family: Red_October;
 	src: url(fonts/Red_October.ttf);
 }
+@font-face {
+	font-family: a_AlternaNr;
+	src: url(fonts/a_AlternaNr.ttf);
+}
 body {
 	background-color: #282B30;
 	background-image: url(img/index.jpg);
@@ -45,7 +49,7 @@ p {
 	
 }
 #splash {
-	font-family: Red_October, 'Time News Roman';
+	font-family: a_AlternaNr, 'Time News Roman';
 	text-shadow: white 0 0 4px;
 	color:black;
 	position: absolute;
@@ -54,7 +58,7 @@ p {
 	margin: auto;
 	top: 0; left: 0; bottom: 0; right: 0;
 	margin-top:210px;
-	font-size: 15pt;
+	font-size: 25pt;
 	text-align: center;
 }
 #main-div {
@@ -80,7 +84,7 @@ p {
 }
 
 #room_title {
-	font-size: 20pt;
+	font-size: 25pt;
 	padding-top:10px;
 	height:40px;
 	width:600px;
@@ -93,6 +97,7 @@ p {
 	border-radius:0 0 10px 10px;
 	background-color:#777E76;
 	text-shadow: #2A0017 0 0 2px;
+	font-family: a_AlternaNr, 'Time News Roman';
 }
 #room_image {
 	height:600px;
@@ -123,6 +128,7 @@ p {
 	font-weight:bold;
 	color:black;
 	text-align: center;
+	font-family: a_AlternaNr, 'Time News Roman';
 }
 #actualText_back {
 	height:200px;
@@ -176,7 +182,7 @@ p {
 	right:4px;
 }
 #cmd {
-	font-family: Red_October, 'Time News Roman';
+	font-family: a_AlternaNr, 'Time News Roman';
 	position: absolute;
 	top:143px;
 	width: 1193px;
@@ -189,7 +195,7 @@ p {
 }
 
 #system_menu {
-	font-family: Red_October, 'Time News Roman';
+	font-family: a_AlternaNr, 'Time News Roman';
 	position:absolute;
 	top:-5px;
 	left:15px;
@@ -221,7 +227,7 @@ li a {
 	/*color:black;*/
 }
 .button {
-	font-size: 15pt;
+	font-size: 18pt;
 	padding: 4px;
 	cursor: pointer;
 	text-align: center;
@@ -229,7 +235,7 @@ li a {
 	color: black;
 	border-radius: 5px;
 	border: 1px solid black;
-	font-family: Red_October, 'Time News Roman';
+	font-family: a_AlternaNr, 'Time News Roman';
 }
 .button_flaged {
 	font-size: 15pt;
