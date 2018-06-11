@@ -4,6 +4,7 @@
 }
 body {
 	background-color: #282B30;
+	background-image: url(img/back/index.jpg);
 }
 p {
 	line-height: 0.9em;
