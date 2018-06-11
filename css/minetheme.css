@@ -26,7 +26,6 @@ body {
 	background-color: #282B30;
 	background-image: url(img/index.jpg);
 	background-size: 100%;
-	font-family: Arvo, 'Time News Roman';
 }
 p {
 	line-height: 1em;
@@ -35,6 +34,7 @@ p {
 }
 p.tab {
 	padding-left: 12px;
+	font-family: PT Serif;
 }
 
 #video_bg {
@@ -186,8 +186,8 @@ p.tab {
 	position:relative;
 }
 #playerActions {
-	height:200px;
-	width:800px;
+	height:132px;
+	width:913px;
 	position:absolute;
 	left:5px;
 	padding: 4px;
@@ -297,4 +297,8 @@ li a {
 .a_button:hover {
 	text-decoration: none; 
 	color: red;	
+}
+
+.after:after {
+content:'_';	
 }

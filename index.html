@@ -39,7 +39,8 @@ var gameView = {
   awaiting_clicks : 0,
   click_buffer : [],
   showText : function(txt) {
-  	$('#actualText').append('<p class="tab">'+txt+'</p>');
+	$('#actualText').append('<p class="tab">'+txt+'</p>');
+	
 	if (typeof(document.getElementById("actualText")) != 'undefined') {
 			t_scroll = document.getElementById("actualText").scrollHeight
 	}
@@ -54,10 +55,10 @@ var gameView = {
     var validAction = currentRoom.actions.hasOwnProperty(cmd);
     this.showText('<span class="textBold">&gt;' + cmd + '</span>');
     if (!validAction) {
-    	this.showText('What?'); // это реакция на действие которое не было прописано в комнате
-    } else {
-    	this.showText(currentRoom.actions[cmd](currentRoom)); // вызов имеющейся реакции
-    }
+		this.showText('What?') // это реакция на действие которое не было прописано в комнате
+	} else {
+		this.showText(currentRoom.actions[cmd](currentRoom)); // вызов имеющейся реакции
+	}
     this.rebuild();
   },
   clicked : function(name) {
@@ -333,7 +334,6 @@ var changeSplash = function() {
 </script>
 <title>ВНИМАНИЕ НАЧИНАЕТСЯ САМОСБОР</title>
 <link rel="stylesheet" type="text/css" href="css/minetheme.css">
-<link rel="stylesheet" type="text/css" href="css/jquery.jscrollpane.css">
 
 </head>
 <body>
