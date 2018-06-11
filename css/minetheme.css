@@ -55,7 +55,10 @@ p {
 	
 }
 #splash {
-	text-shadow: white 0 0 4px;
+	text-shadow: 1px 1px 0 #424230,
+            1px -1px 0 #424230,
+            -1px 1px 0 #424230,
+            -1px -1px 0 #424230;
 	color:black;
 	position: absolute;
 	width:1100px;
@@ -67,7 +70,6 @@ p {
 	text-align: center;
 }
 #main-div {
-	/*background-color: #383838;*/
 	color: black;
 	position:absolute;
 	width: 1200px;
