@@ -39,7 +39,7 @@ var gameView = {
   awaiting_clicks : 0,
   click_buffer : [],
   showText : function(txt) {
-  	$('#actualText').append('<br>'+txt);
+  	$('#actualText').append('<p class="tab">'+txt+'</p>');
 	if (typeof(document.getElementById("actualText")) != 'undefined') {
 			t_scroll = document.getElementById("actualText").scrollHeight
 	}

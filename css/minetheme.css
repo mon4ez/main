@@ -29,9 +29,12 @@ body {
 	font-family: Arvo, 'Time News Roman';
 }
 p {
-	line-height: 0.9em;
+	line-height: 1em;
 	margin: 0;
 	padding: 0;
+}
+p.tab {
+	padding-left: 12px;
 }
 
 #video_bg {
@@ -147,8 +150,8 @@ p {
 	font-size: 15pt;
 	font-weight:bold;
 	color:black;
-	text-align: center;
-	font-family: Georgia;
+	text-align: left;
+	font-family: 'Georgia';
 }
 #actualText_back {
 	height:200px;
@@ -276,7 +279,9 @@ li a {
 	border-radius: 5px;
 }
 .textBold {
-	font-family: ArvoBold_Bold;
+	font-family: Arvo, Time News Roman;
+	position:relative;
+	left:-12px;
 }
 .a_button:link {
     text-decoration: none;
