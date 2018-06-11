@@ -26,6 +26,7 @@ body {
 	background-color: #282B30;
 	background-image: url(img/index.jpg);
 	background-size: 100%;
+	font-family: Arvo;
 }
 p {
 	line-height: 1em;
@@ -34,7 +35,7 @@ p {
 }
 p.tab {
 	padding-left: 12px;
-	font-family: PT Serif;
+	font-family: Georgia;
 }
 
 #video_bg {
@@ -148,10 +149,8 @@ p.tab {
 	left:4px;
 	overflow-y: auto;
 	font-size: 15pt;
-	font-weight:bold;
 	color:black;
 	text-align: left;
-	font-family: PT Serif;
 }
 #actualText_back {
 	height:200px;
