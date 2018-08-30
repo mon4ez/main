@@ -103,11 +103,12 @@ var gameView = {
       	_this.clicked($(this).text());
       });
       }
-    }
+    },
 	status : function () {
 		$('#namePlayerStatus').text = currentRoom.playerName;
 		$('#healthPlayerStatus').text = currentRoom.playerHealth;
 		$('#playerPosition').text = currentRoom.playerPosition;
+		
 	}
 }
 
