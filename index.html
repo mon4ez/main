@@ -183,39 +183,48 @@ function gameInterface(room) {
 var room1 = {
   roomId : 1,
   roomImg : 'img/back/lol5.png',
-  roomTitle : 'Клетка Сыча',
+  roomTitle : 'Квартира №13/756',
   // это просто чтобы держать состояния комнаты вместе
   flags : {
   	door_opened : false
   },
   // здесь описываются кнопки
 	buttons : [
-    { name : 'убить', // название кнопки
+    { name : 'Открыть', // название кнопки
       visible : true, // изначальная видимость
     	chain_length : 2 }, // количество кнопок которые надо будет нажать после
-    { name : 'дед',
-      visible : true,
-    	chain_length : 0 },
-    { name : 'нож',
-      visible : true,
-    	chain_length : 0 },
-  	{ name : 'open',
+    { name : 'Закрыть',
       visible : true,
     	chain_length : 1 },
-    { name : 'door',
+    { name : 'Сесть',
       visible : true,
     	chain_length : 0 },
-    { name : 'exit room',
+  	{ name : 'Встать',
+      visible : true,
+    	chain_length : 0 },
+  	{ name : 'Осмотреть',
+      visible : true,
+    	chain_length : 1 },
+    { name : 'Дверь',
+      visible : true,
+    	chain_length : 0 },
+    { name : 'Окно',
       visible : false,
     	chain_length : 0 },
+	{ name : 'Холодильник',
+      visible : false,
+    chain_length : 0 },
+	{ name : 'Ключ',
+      visible : false,
+    chain_length : 0 },
   ],
   getDescription : function(room) { // эта функция возвращает текст который будет показан при заходе в комнату. здесь можно проверить/установить флаги перед показом текста
   	return 'This is an exampe room.'
   },
   // а здесь прописываются реакции на действия
   actions : {
-    'убить дед нож' : function(room) { return 'Вы убили деда ножом!' }, // каждая реакция возвращает текст для показа
-    'убить нож дед' : function(room) { return 'Вы убили нож дедом!' },
+    'Открыть Дверь' : function(room) { return 'Дверь заперта!' }, // каждая реакция возвращает текст для показа
+    'Открыть Дверь Ключ' : function(room) { return 'Вы открыли дверь с помощью ключа!' },
   	'open door' : 
       function(room) { // и кроме возвращения текста может проверять флаги, устанавливать флаги, менять видимост кнопок и многое другое, например сменить текущий currentRoom на что-то другое
       	if (room.flags.door_opened) {
