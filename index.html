@@ -239,7 +239,7 @@ var room1 = {
       visible : true,
     	chain_length : 2 },
     { name : 'Сесть',
-      visible : true,
+      visible : false,
     	chain_length : 0 },
   	{ name : 'Встать',
       visible : false,
@@ -315,11 +315,11 @@ var room1 = {
       function(room) { // и кроме возвращения текста может проверять флаги, устанавливать флаги, менять видимост кнопок и многое другое, например сменить текущий currentRoom на что-то другое
       	if (room.flags.door_opened) {
         	getButtonByName(room, 'Выйти из комнаты').visible = true;
-			return 'Вы открыли дверь';
+			return 'Вставив ключ в шестигранное отверстие вы с усилием его провернули. Затем, убедившись в отсутсвии тревоги, с не меньшим усилием вы провернули колесо механизама герметизации. Теперь дверь отперта';
         }
 		else {
 			if (room.flags.key_is_known) {
-				return 'Дверь заперта!';
+				return 'На двери шестигранное отверстие для ключа и колесо герметизации. Провернуть колесо не вышло. Дверь заперта! ';
 			}
 			else {
 				room.flags.key_is_known = true;
@@ -327,7 +327,7 @@ var room1 = {
 				getButtonByName(room, 'Холодильник').visible = true;
 				getButtonByName(room, 'Стол').visible = true;
 				getButtonByName(room, 'Кровать').visible = true;
-				return 'Дверь заперта? Ах да. Где же ключ? Он долже быть где-то здесь.';
+				return 'Дверь заперта? Ах да. Где же ключ? Он должен быть где-то здесь.';
 			}
 		}
     },
