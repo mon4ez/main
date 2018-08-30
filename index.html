@@ -55,7 +55,7 @@ var gameView = {
     var validAction = currentRoom.actions.hasOwnProperty(cmd);
     this.showText('<span class="textBold">&gt;' + cmd + '</span>');
     if (!validAction) {
-		this.showText('What?') // это реакция на действие которое не было прописано в комнате
+		this.showText('Ничего не происходит?') // это реакция на действие которое не было прописано в комнате
 	} else {
 		this.showText(currentRoom.actions[cmd](currentRoom)); // вызов имеющейся реакции
 	}
@@ -192,10 +192,13 @@ var room1 = {
 	buttons : [
     { name : 'Открыть', // название кнопки
       visible : true, // изначальная видимость
-    	chain_length : 2 }, // количество кнопок которые надо будет нажать после
+    	chain_length : 1 }, // количество кнопок которые надо будет нажать после
     { name : 'Закрыть',
       visible : true,
     	chain_length : 1 },
+	{ name : 'Использовать',
+      visible : true,
+    	chain_length : 2 },
     { name : 'Сесть',
       visible : true,
     	chain_length : 0 },
@@ -215,7 +218,7 @@ var room1 = {
       visible : false,
     chain_length : 0 },
 	{ name : 'Ключ',
-      visible : false,
+      visible : true,
     chain_length : 0 },
   ],
   getDescription : function(room) { // эта функция возвращает текст который будет показан при заходе в комнату. здесь можно проверить/установить флаги перед показом текста
@@ -224,7 +227,7 @@ var room1 = {
   // а здесь прописываются реакции на действия
   actions : {
     'Открыть Дверь' : function(room) { return 'Дверь заперта!' }, // каждая реакция возвращает текст для показа
-    'Открыть Дверь Ключ' : function(room) { return 'Вы открыли дверь с помощью ключа!' },
+    'Использовать Ключ Дверь' : function(room) { return 'Вы открыли дверь с помощью ключа!' },
   	'open door' : 
       function(room) { // и кроме возвращения текста может проверять флаги, устанавливать флаги, менять видимост кнопок и многое другое, например сменить текущий currentRoom на что-то другое
       	if (room.flags.door_opened) {
