@@ -337,7 +337,7 @@ var room1 = {
 			getButtonByName(room, 'Ключ от двери').visible = true;
 			return 'На столе лежит довольно массивный ключ от входной двери.'; 
 		}
-		eles {
+		else {
 			return 'На столе ничего нет.';
 		}
 	},
@@ -345,7 +345,7 @@ var room1 = {
 		room.flags.key_in_inventory = true;	
 		return 'Вы взяли ключ от двери. На столе больше ничего нет.'; 
 	},
-	'Выйти из комнаты' : function(room) { currentRoom = room2; return 'За комнатой не оказалось ничего!'; }
+	'Выйти из комнаты' : function(room) { currentRoom = room2; return 'За комнатой не оказалось ничего...'; }
   }
 }
 
