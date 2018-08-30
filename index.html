@@ -28,8 +28,8 @@ var getButtonByName = function(obj,name) { // это сервисная функ
   for (var i = 0; i < obj.buttons.length; i++) {
     var button = obj.buttons[i];
     if (button['name'] == name) {
-      return button;
-	  console.log(button);
+      	console.log(button);
+	  return button;
     }
   }
 }
@@ -299,8 +299,8 @@ var room1 = {
   	'Открыть Дверь' :
       function(room) { // и кроме возвращения текста может проверять флаги, устанавливать флаги, менять видимост кнопок и многое другое, например сменить текущий currentRoom на что-то другое
       	if (room.flags.door_opened) {
-        	return 'Вы открыли дверь';
-			getButtonByName(room, 'Выйти из комнаты').visible = true;
+        	getButtonByName(room, 'Выйти из комнаты').visible = true;
+			return 'Вы открыли дверь';
         }
 		else {
 			return 'Дверь заперта!';
