@@ -267,9 +267,9 @@ var room1 = {
   // а здесь прописываются реакции на действия
   actions : {
 	'Сесть' : function(room) {
-		if (room.playerStatus != 'Сидит')
+		if (room.playerPosition != 'Сидит')
 		{
-			room.playerStatus = 'Сидит';
+			room.playerPosition = 'Сидит';
 			return 'Вы сели' 
 		}
 		else {
@@ -277,9 +277,9 @@ var room1 = {
 		}
 	},
 	'Встать' : function(room) {
-		if (room.playerStatus != 'Стоит')
+		if (room.playerPosition != 'Стоит')
 		{
-			room.playerStatus = 'Стоит';
+			room.playerPosition = 'Стоит';
 			return 'Вы встали' 
 		}
 		else {
