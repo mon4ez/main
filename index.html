@@ -220,7 +220,9 @@ var room1 = {
   playerPosition : 'Стоит',
   dayTime: '8:00',
   flags : {
-  	door_opened : false
+  	door_opened : false,
+	key_is_known : false
+	key_in_inventory : false,
   },
   // здесь описываются кнопки
 	buttons : [
@@ -230,6 +232,9 @@ var room1 = {
     { name : 'Закрыть',
       visible : false,
     	chain_length : 1 },
+    { name : 'Взять',
+      visible : false,
+    	chain_length : 1 },
 	{ name : 'Использовать',
       visible : true,
     	chain_length : 2 },
@@ -237,10 +242,10 @@ var room1 = {
       visible : true,
     	chain_length : 0 },
   	{ name : 'Встать',
-      visible : true,
+      visible : false,
     	chain_length : 0 },
   	{ name : 'Осмотреть',
-      visible : true,
+      visible : false,
     	chain_length : 1 },
     { name : 'Дверь',
       visible : true,
@@ -251,18 +256,24 @@ var room1 = {
 	{ name : 'Холодильник',
       visible : false,
     chain_length : 0 },
-	{ name : 'Ключ',
-      visible : true,
+	{ name : 'Ключ от двери',
+      visible : false,
     chain_length : 0 },
-	{ name : 'Глаз',
-      visible : true,
+	{ name : 'Холодильник',
+      visible : false,
+    chain_length : 0 },
+	{ name : 'Стол',
+      visible : false,
+    chain_length : 0 },
+	{ name : 'Кровать',
+      visible : false,
     chain_length : 0 },
 	{ name : 'Выйти из комнаты',
       visible : false,
     chain_length : 0 }
   ],
   getDescription : function(room) { // эта функция возвращает текст который будет показан при заходе в комнату. здесь можно проверить/установить флаги перед показом текста
-  	return 'Еще один суточный цикл берет свое начало. Радиолиния тысячи раз будила меня одной и той же мелодией. С самого раннего дества, когда я жил еще с родителями. Сегодня можно сказать мой первый самостоятельный день. Я получил личную жилячейку! Квартира, как благоговейно называют её те, кто обзавелся семьей и устав от этого мечтает об индивидуальном пространстве. В прочем, времени чтобы в волю насладится своим новым домом у меня нет. Через час я должен быть на фабрике, надо выполнять План. О том что произойдет в противном случае даже думать не хочется.'
+  	return 'Еще один суточный цикл берет свое начало. Радиолиния тысячи раз будила меня одной и той же мелодией. С самого раннего детства, когда я жил еще с родителями. Сегодня можно сказать мой первый самостоятельный день. Я получил личную жилячейку! Квартира, как благоговейно называют её те, кто обзавелся семьей и устав от этого мечтает об индивидуальном пространстве. В прочем, времени чтобы в волю насладится своим новым домом у меня нет. Через час я должен быть на фабрике, надо выполнять План. О том что произойдет в противном случае даже думать не хочется.'
   },
   // а здесь прописываются реакции на действия
   actions : {
@@ -287,11 +298,11 @@ var room1 = {
 		}
 	},
     //'Открыть Дверь' : function(room) { return 'Дверь заперта!' }, // каждая реакция возвращает текст для показа
-    'Использовать Ключ Дверь' : function(room) { 
+    'Использовать Ключ от двери Дверь' : function(room) { 
 		room.flags.door_opened = true; 
 		return 'Вы отомкнули дверь с помощью ключа!' 
 	},
-	'Использовать Ключ Глаз' : function(room) {
+	'Использовать Ключ от двери Глаз' : function(room) {
 		room.playerHealth = 15;
 		return 'С маниакальной ухмылкой вы втыкаете ключ себе в глаз!'
 	},
@@ -302,10 +313,34 @@ var room1 = {
 			return 'Вы открыли дверь';
         }
 		else {
-			return 'Дверь заперта!';
+			if (room.flags.key_is_known) {
+				room.flags.key_is_known = true;
+				getButtonByName(room, 'Осмотреть').visible = true;
+				getButtonByName(room, 'Холодильник').visible = true;
+				getButtonByName(room, 'Стол').visible = true;
+				getButtonByName(room, 'Кровать').visible = true;
+				return 'Дверь заперта? Ах да. Где же ключ? Он долже быть где-то здесь.';
+			}
+			else {
+				return 'Дверь заперта!';
+			}
 		}
     },
-    'Выйти из комнаты' : function(room) { currentRoom = room2; return 'За комнатой не оказалось ничего!'; }
+	'Осмотреть Стол' : function(room) { 
+		if (room.flags.flags.key_in_inventory) {
+			getButtonByName(room, 'Взять').visible = true;
+			getButtonByName(room, 'Ключ от двери').visible = true;
+			return 'На столе лежит довольно массивный ключ от входной двери.'; 
+		}
+		eles {
+			return 'На столе ничего нет.';
+		}
+	},
+	'Взять Ключ от двери' : function(room) {
+		room.flags.flags.key_in_inventory = true;
+		return 'Вы взяли ключ от двери. На столе больше ничего нет.'; 
+	},
+	'Выйти из комнаты' : function(room) { currentRoom = room2; return 'За комнатой не оказалось ничего!'; }
   }
 }
 
