@@ -84,6 +84,9 @@ var gameView = {
      this.previousRoom = currentRoom;
      this.showText(currentRoom.getDescription(currentRoom));
     }
+	$('#namePlayerStatus').text(currentRoom.playerName);
+	$('#healthPlayerStatus').text(currentRoom.playerHealth);
+	$('#positionPlayerStatus').text(currentRoom.playerPosition);
     $('#playerActions').empty();
 		for (var i = 0; i < currentRoom.buttons.length; i++) {
       var butt = currentRoom.buttons[i];
@@ -103,9 +106,7 @@ var gameView = {
       	_this.clicked($(this).text());
       });
       }
-		$('#namePlayerStatus').text = currentRoom.playerName;
-		$('#healthPlayerStatus').text = currentRoom.playerHealth;
-		$('#positionPlayerStatus').text = currentRoom.playerPosition;
+		
     }
 
 		
@@ -157,6 +158,7 @@ function gameInterface(room) {
 			var healthPlayerStatus = document.createElement('div');
 			healthPlayerStatus.id = 'healthPlayerStatus';
 			playerStatus.append(healthPlayerStatus);
+			
 			
 			var positionPlayerStatus = document.createElement('div');
 			positionPlayerStatus.id = 'positionPlayerStatus';
@@ -233,7 +235,7 @@ var room1 = {
     chain_length : 0 },
   ],
   getDescription : function(room) { // эта функция возвращает текст который будет показан при заходе в комнату. здесь можно проверить/установить флаги перед показом текста
-  	return 'Чтож. Еще один суточный цикл берет свое начало. Радиолиния тысячи раз будила меня одной и той же мелодией. С самого раннего дества, когда я жил еще с родителями. Сегодня можно сказать мой первый самостоятельный день! Я получил личную жилячейку. Квартира, как благоговейно называют её те, кто обзавелся семьей и устав от этого мечтает об индивидуальном пространстве. В прочем, времени чтобы в волю насладится своим пространством у меня нет. Через час я должен быть на фабрике, надо выполнять План. О том что произойдет в противном случае даже думать не хочется.1'
+  	return 'Чтож. Еще один суточный цикл берет свое начало. Радиолиния тысячи раз будила меня одной и той же мелодией. С самого раннего дества, когда я жил еще с родителями. Сегодня можно сказать мой первый самостоятельный день! Я получил личную жилячейку. Квартира, как благоговейно называют её те, кто обзавелся семьей и устав от этого мечтает об индивидуальном пространстве. В прочем, времени чтобы в волю насладится своим пространством у меня нет. Через час я должен быть на фабрике, надо выполнять План. О том что произойдет в противном случае даже думать не хочется.'
   },
   // а здесь прописываются реакции на действия
   actions : {
