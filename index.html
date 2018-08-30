@@ -103,14 +103,12 @@ var gameView = {
       	_this.clicked($(this).text());
       });
       }
-    },
-	status : function () {
 		$('#namePlayerStatus').text = currentRoom.playerName;
 		$('#healthPlayerStatus').text = currentRoom.playerHealth;
-		$('#playerPosition').text = currentRoom.playerPosition;
+		$('#positionPlayerStatus').text = currentRoom.playerPosition;
+    }
+
 		
-	}
-	this.status();
 }
 
 function gameInterface(room) {
@@ -160,9 +158,9 @@ function gameInterface(room) {
 			healthPlayerStatus.id = 'healthPlayerStatus';
 			playerStatus.append(healthPlayerStatus);
 			
-			var playerPosition = document.createElement('div');
-			playerPosition.id = 'playerPosition';
-			playerStatus.append(playerPosition);
+			var positionPlayerStatus = document.createElement('div');
+			positionPlayerStatus.id = 'positionPlayerStatus';
+			playerStatus.append(positionPlayerStatus);
 			
 	var room_actions = document.createElement('div');
 	room_actions.id = 'room_actions';
