@@ -266,10 +266,30 @@ var room1 = {
   },
   // а здесь прописываются реакции на действия
   actions : {
+	'Сесть' : function(room) {
+		if (room.playerStatus != 'Сидит')
+		{
+			room.playerStatus = 'Сидит';
+			return 'Вы сели' 
+		}
+		else {
+			return 'Вы уже сидите' ;
+		}
+	},
+	'Встать' : function(room) {
+		if (room.playerStatus != 'Стоит')
+		{
+			room.playerStatus = 'Стоит';
+			return 'Вы встали' 
+		}
+		else {
+			return 'Вы уже стоите' ;
+		}
+	},
     //'Открыть Дверь' : function(room) { return 'Дверь заперта!' }, // каждая реакция возвращает текст для показа
     'Использовать Ключ Дверь' : function(room) { 
 		room.flags.door_opened = true; 
-		return 'Вы открыли дверь с помощью ключа!' 
+		return 'Вы отомкнули дверь с помощью ключа!' 
 	},
 	'Использовать Ключ Глаз' : function(room) {
 		room.playerHealth = 15;
