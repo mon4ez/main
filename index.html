@@ -294,13 +294,18 @@ var room1 = {
 			return 'Вы встали' 
 		}
 		else {
-			return 'Вы уже стоите' ;
+			return 'Вы уже стоите';
 		}
 	},
     //'Открыть Дверь' : function(room) { return 'Дверь заперта!' }, // каждая реакция возвращает текст для показа
     'Использовать Ключ от двери Дверь' : function(room) { 
-		room.flags.door_opened = true; 
-		return 'Вы отомкнули дверь с помощью ключа!' 
+		if (room.flags.key_in_inventory) {
+			room.flags.door_opened = true; 
+			return 'Вы отомкнули дверь с помощью ключа!' 
+		}
+		else {
+			return 'Ключ все еще на столе.';
+		}
 	},
 	'Использовать Ключ от двери Глаз' : function(room) {
 		room.playerHealth = 15;
@@ -327,7 +332,7 @@ var room1 = {
 		}
     },
 	'Осмотреть Стол' : function(room) { 
-		if (room.flags.flags.key_in_inventory) {
+		if (room.flags.key_in_inventory) {
 			getButtonByName(room, 'Взять').visible = true;
 			getButtonByName(room, 'Ключ от двери').visible = true;
 			return 'На столе лежит довольно массивный ключ от входной двери.'; 
@@ -337,7 +342,7 @@ var room1 = {
 		}
 	},
 	'Взять Ключ от двери' : function(room) {
-		room.flags.flags.key_in_inventory = true;
+		room.flags.key_in_inventory = true;	
 		return 'Вы взяли ключ от двери. На столе больше ничего нет.'; 
 	},
 	'Выйти из комнаты' : function(room) { currentRoom = room2; return 'За комнатой не оказалось ничего!'; }
