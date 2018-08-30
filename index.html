@@ -87,7 +87,7 @@ var gameView = {
 	$('#namePlayerStatus').text(currentRoom.playerName);
 	if (currentRoom.playerHealth >= 70) {
 		$('#healthPlayerStatus').text('Здоров');//как пельмень
-		$('#healthPlayerStatus').css('color','#4b781e');
+		$('#healthPlayerStatus').css('color','##93c14d');
 	}
 	else if (currentRoom.playerHealth >= 40 && currentRoom.playerHealth < 70) {
 		$('#healthPlayerStatus').text('В норме');
@@ -106,8 +106,8 @@ var gameView = {
 		$('#healthPlayerStatus').css('color','Black');
 	}
 	
-	$('#healthPlayerStatus').text('Здоровье:' + currentRoom.playerHealth);
 	$('#positionPlayerStatus').text(currentRoom.playerPosition);
+	
     $('#playerActions').empty();
 		for (var i = 0; i < currentRoom.buttons.length; i++) {
       var butt = currentRoom.buttons[i];
@@ -254,8 +254,11 @@ var room1 = {
 	{ name : 'Ключ',
       visible : true,
     chain_length : 0 },
-		{ name : 'Глаз',
+	{ name : 'Глаз',
       visible : true,
+    chain_length : 0 },
+	{ name : 'Выйти из комнаты',
+      visible : false,
     chain_length : 0 },
   ],
   getDescription : function(room) { // эта функция возвращает текст который будет показан при заходе в комнату. здесь можно проверить/установить флаги перед показом текста
@@ -269,17 +272,17 @@ var room1 = {
 		room.playerHealth = 15;
 		return 'С маниакальной ухмылкой вы втыкаете ключ себе в глаз!'
 	},
-  	'open door' : 
+  	'Открыть дверь' : 
       function(room) { // и кроме возвращения текста может проверять флаги, устанавливать флаги, менять видимост кнопок и многое другое, например сменить текущий currentRoom на что-то другое
       	if (room.flags.door_opened) {
-        	return 'Already opened!';
+        	return 'Уже открыта!';
         } else {
         	room.flags.door_opened = true;
-          getButtonByName(room, 'exit room').visible = true; // пример когда меняется видимость кнопке
-          return 'You\'ve opened the door!';
+          getButtonByName(room, 'Выйти из комнаты').visible = true; // пример когда меняется видимость кнопке
+          return 'Вы открыли дверь';
         }
     },
-    'exit room' : function(room) { currentRoom = room2; return 'You win!'; }
+    'Выйти из комнаты' : function(room) { currentRoom = room2; return 'За комнатой не оказалось ничего!'; }
   }
 }
 
@@ -289,7 +292,7 @@ var room2 = {
   buttons : [
   	{ name : 'нечего нажимать', highlight : true } // по умолчанию chain_length будет 0, а visible будет true. highlight можно использовать для односложных действий чтобы отличать это от предметов (дед vs блевануть)
   ],
-  getDescription : function(room) { return 'Вы в комнате победителя.' },
+  getDescription : function(room) { return 'Вы падаете в бесконечность' },
   actions : {  'нечего нажимать' : function() { return 'Сказано же, нечего нажимать!' }}
 }
 
