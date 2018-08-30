@@ -85,7 +85,28 @@ var gameView = {
      this.showText(currentRoom.getDescription(currentRoom));
     }
 	$('#namePlayerStatus').text(currentRoom.playerName);
-	$('#healthPlayerStatus').text(currentRoom.playerHealth);
+	if (currentRoom.playerHealth >= 70) {
+		$('#healthPlayerStatus').text('Здоров');//как пельмень
+		$('#healthPlayerStatus').Color('Green');
+	}
+	else if (currentRoom.playerHealth >= 40 && currentRoom.playerHealth < 70) {
+		$('#healthPlayerStatus').text('В норме');
+		$('#healthPlayerStatus').Color('Yellow');
+	}
+	else if (currentRoom.playerHealth >= 10 && currentRoom.playerHealth < 40) {
+		$('#healthPlayerStatus').text('Всё плохо');
+		$('#healthPlayerStatus').Color('Orange');
+	}
+	else if (currentRoom.playerHealth < 10) {
+		$('#healthPlayerStatus').text('При смерти');
+		$('#healthPlayerStatus').Color('Red');
+	}
+	else {
+		$('#healthPlayerStatus').text('Мертв');
+		$('#healthPlayerStatus').Color('Black');
+	}
+	
+	$('#healthPlayerStatus').text('Здоровье:' + currentRoom.playerHealth);
 	$('#positionPlayerStatus').text(currentRoom.playerPosition);
     $('#playerActions').empty();
 		for (var i = 0; i < currentRoom.buttons.length; i++) {
@@ -233,6 +254,9 @@ var room1 = {
 	{ name : 'Ключ',
       visible : true,
     chain_length : 0 },
+		{ name : 'Глаз',
+      visible : true,
+    chain_length : 0 },
   ],
   getDescription : function(room) { // эта функция возвращает текст который будет показан при заходе в комнату. здесь можно проверить/установить флаги перед показом текста
   	return 'Чтож. Еще один суточный цикл берет свое начало. Радиолиния тысячи раз будила меня одной и той же мелодией. С самого раннего дества, когда я жил еще с родителями. Сегодня можно сказать мой первый самостоятельный день! Я получил личную жилячейку. Квартира, как благоговейно называют её те, кто обзавелся семьей и устав от этого мечтает об индивидуальном пространстве. В прочем, времени чтобы в волю насладится своим пространством у меня нет. Через час я должен быть на фабрике, надо выполнять План. О том что произойдет в противном случае даже думать не хочется.'
@@ -241,6 +265,10 @@ var room1 = {
   actions : {
     'Открыть Дверь' : function(room) { return 'Дверь заперта!' }, // каждая реакция возвращает текст для показа
     'Использовать Ключ Дверь' : function(room) { return 'Вы открыли дверь с помощью ключа!' },
+	'Использовать Ключ Глаз' : function(room) {
+		room.playerHealth = 15;
+		return 'С маниакальной ухмылкой вы втыкаете ключ себе в глаз!'
+	}
   	'open door' : 
       function(room) { // и кроме возвращения текста может проверять флаги, устанавливать флаги, менять видимост кнопок и многое другое, например сменить текущий currentRoom на что-то другое
       	if (room.flags.door_opened) {
