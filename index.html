@@ -333,12 +333,12 @@ var room1 = {
     },
 	'Осмотреть Стол' : function(room) { 
 		if (room.flags.key_in_inventory) {
+			return 'На столе ничего нет.';
+		}
+		else {
 			getButtonByName(room, 'Взять').visible = true;
 			getButtonByName(room, 'Ключ от двери').visible = true;
 			return 'На столе лежит довольно массивный ключ от входной двери.'; 
-		}
-		else {
-			return 'На столе ничего нет.';
 		}
 	},
 	'Взять Ключ от двери' : function(room) {
