@@ -102,8 +102,13 @@ var gameView = {
       btn.click(function(){
       	_this.clicked($(this).text());
       });
+      }
     }
-  }
+	status : function () {
+		$('#namePlayerStatus').text = currentRoom.playerName;
+		$('#healthPlayerStatus').text = currentRoom.playerHealth;
+		$('#playerPosition').text = currentRoom.playerPosition;
+	}
 }
 
 function gameInterface(room) {
@@ -153,9 +158,9 @@ function gameInterface(room) {
 			healthPlayerStatus.id = 'healthPlayerStatus';
 			playerStatus.append(healthPlayerStatus);
 			
-			var bodyPlayerStatus = document.createElement('div');
-			bodyPlayerStatus.id = 'bodyPlayerStatus';
-			playerStatus.append(bodyPlayerStatus);
+			var playerPosition = document.createElement('div');
+			playerPosition.id = 'playerPosition';
+			playerStatus.append(playerPosition);
 			
 	var room_actions = document.createElement('div');
 	room_actions.id = 'room_actions';
@@ -176,6 +181,8 @@ function gameInterface(room) {
 		var cmd = document.createElement('div');
 		cmd.id = 'cmd';
 		room_actions.append(cmd);
+		
+	
 }
 
 
@@ -183,8 +190,12 @@ function gameInterface(room) {
 var room1 = {
   roomId : 1,
   roomImg : 'img/back/lol5.png',
-  roomTitle : 'Квартира №13/756',
+  roomTitle : 'Жилячейка №13/756',
   // это просто чтобы держать состояния комнаты вместе
+  playerName : 'Антон Сычев',
+  playerHealth : 100,
+  playerPosition : 'Стоит',
+  dayTime: '8:00',
   flags : {
   	door_opened : false
   },
@@ -222,7 +233,7 @@ var room1 = {
     chain_length : 0 },
   ],
   getDescription : function(room) { // эта функция возвращает текст который будет показан при заходе в комнату. здесь можно проверить/установить флаги перед показом текста
-  	return 'This is an exampe room.'
+  	return 'Чтож. Еще один суточный цикл берет свое начало. Радиолиния тысячи раз будила меня одной и той же мелодией. С самого раннего дества, когда я жил еще с родителями. Сегодня можно сказать мой первый самостоятельный день! Я получил личную жилячейку. Квартира, как благоговейно называют её те, кто обзавелся семьей и устав от этого мечтает об индивидуальном пространстве. В прочем, времени чтобы в волю насладится своим пространством у меня нет. Через час я должен быть на фабрике, надо выполнять План. О том что произойдет в противном случае даже думать не хочется.'
   },
   // а здесь прописываются реакции на действия
   actions : {
