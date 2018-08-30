@@ -29,6 +29,7 @@ var getButtonByName = function(obj,name) { // это сервисная функ
     var button = obj.buttons[i];
     if (button['name'] == name) {
       return button;
+	  console.log(button);
     }
   }
 }
@@ -228,7 +229,7 @@ var room1 = {
       visible : true, // изначальная видимость
     	chain_length : 1 }, // количество кнопок которые надо будет нажать после
     { name : 'Закрыть',
-      visible : true,
+      visible : false,
     	chain_length : 1 },
 	{ name : 'Использовать',
       visible : true,
