@@ -175,7 +175,7 @@ p.tab {
 	position:absolute;
 	top:0px;
 	right:0px;
-	background-color: #white;
+	background-color: white;
 	/*opacity: 1;*/
 	border-radius:10px 0 0 10px;
 }
