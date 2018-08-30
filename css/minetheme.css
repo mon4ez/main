@@ -157,7 +157,7 @@ p.tab {
 	width:930px;
 	position:absolute;
 	background-color: #777E76;
-	opacity: 0.6;
+	opacity: 0.8;
 	border-radius:0 10px 10px 0;
 }
 #playerStatus {
@@ -176,7 +176,7 @@ p.tab {
 	top:0px;
 	right:0px;
 	background-color: #777E76;
-	opacity: 0.6;
+	opacity: 0.8;
 	border-radius:10px 0 0 10px;
 }
 #room_actions {
