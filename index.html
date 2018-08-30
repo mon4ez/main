@@ -298,16 +298,13 @@ var room1 = {
   	'Открыть Дверь' :
       function(room) { // и кроме возвращения текста может проверять флаги, устанавливать флаги, менять видимост кнопок и многое другое, например сменить текущий currentRoom на что-то другое
       	if (room.flags.door_opened) {
-        	return 'Уже открыта!';
+        	return 'Вы открыли дверь';
+			getButtonByName(room, 'Выйти из комнаты').visible = true;
         }
-		else if(room.flags.door_opened == false) {
+		else {
 			return 'Дверь заперта!';
 		}
-		else {
-        	room.flags.door_opened = true;
-          getButtonByName(room, 'Выйти из комнаты').visible = true; // пример когда меняется видимость кнопке
-          return 'Вы открыли дверь';
-        }
+
     },
     'Выйти из комнаты' : function(room) { currentRoom = room2; return 'За комнатой не оказалось ничего!'; }
   }
