@@ -87,23 +87,23 @@ var gameView = {
 	$('#namePlayerStatus').text(currentRoom.playerName);
 	if (currentRoom.playerHealth >= 70) {
 		$('#healthPlayerStatus').text('Здоров');//как пельмень
-		$('#healthPlayerStatus').Color('Green');
+		$('#healthPlayerStatus').css('color','Green');
 	}
 	else if (currentRoom.playerHealth >= 40 && currentRoom.playerHealth < 70) {
 		$('#healthPlayerStatus').text('В норме');
-		$('#healthPlayerStatus').Color('Yellow');
+		$('#healthPlayerStatus').css('color','Yellow');
 	}
 	else if (currentRoom.playerHealth >= 10 && currentRoom.playerHealth < 40) {
 		$('#healthPlayerStatus').text('Всё плохо');
-		$('#healthPlayerStatus').Color('Orange');
+		$('#healthPlayerStatus').css('color','Orange');
 	}
 	else if (currentRoom.playerHealth < 10) {
 		$('#healthPlayerStatus').text('При смерти');
-		$('#healthPlayerStatus').Color('Red');
+		$('#healthPlayerStatus').css('color','Red');
 	}
 	else {
 		$('#healthPlayerStatus').text('Мертв');
-		$('#healthPlayerStatus').Color('Black');
+		$('#healthPlayerStatus').css('color','Black');
 	}
 	
 	$('#healthPlayerStatus').text('Здоровье:' + currentRoom.playerHealth);
