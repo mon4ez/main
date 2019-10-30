@@ -4,7 +4,7 @@
 </script>
 	
 <script> 
-/* *** Доступные функции *** 
+/* *** Доступные функции 0*** 
 addText(text) - добавляет текст в текстовую область
 function changeStatus(param,stat) - изменение параметров статуса игрока. param: 0 здоровье, 1 положение тела. stat - bodyStatus
 check_actions() - обновить кнопки игрока
