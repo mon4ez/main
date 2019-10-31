@@ -7,5 +7,6 @@ services:
     restart: unless-stopped
     volumes:
       - ./config:/etc/nginx/conf.d
+      - ./:/var/www/
     ports:
       - "80:80"
