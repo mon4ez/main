@@ -11,7 +11,7 @@ pool: Default
 steps:
 - task: CopyFiles@2
   inputs:
-    SourceFolder: '$(Agent.BuildDirectory)/config'
+    SourceFolder: '$(Agent.BuildDirectory)/s/config'
     Contents: '**'
     TargetFolder: '/var/www'
 
