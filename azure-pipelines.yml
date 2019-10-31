@@ -11,11 +11,4 @@ pool: Default
 steps:
 - task: CmdLine@2
   inputs:
-    script: 'echo Hello world'
-
-- task: DockerCompose@0
-  inputs:
-    containerregistrytype: 'Container Registry'
-    dockerComposeFile: '**/docker-compose.yml'
-    action: 'Run a Docker Compose command'
-    dockerComposeCommand: 'up -d'
+    script: 'echo Hello world >> /var/log/syslog' 
