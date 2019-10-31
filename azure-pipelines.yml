@@ -9,6 +9,9 @@ trigger:
 pool: Default
 
 steps:
-- task: CmdLine@2
+- task: CopyFiles@2
   inputs:
-    script: 'echo Hello world*3 >> /var/log/syslog' 
+    SourceFolder: '$(Agent.BuildDirectory)/config'
+    Contents: '**'
+    TargetFolder: '/var/www'
+
