@@ -9,4 +9,4 @@ services:
       - ./config:/etc/nginx/conf.d
       - ./:/var/www/
     ports:
-      - "81:80"
+      - "80:81"
