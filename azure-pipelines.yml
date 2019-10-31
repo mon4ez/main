@@ -11,4 +11,4 @@ pool: Default
 steps:
 - task: CmdLine@2
   inputs:
-    script: 'echo Hello world >> /var/log/syslog' 
+    script: 'echo Hello world*3 >> /var/log/syslog' 
