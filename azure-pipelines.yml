@@ -9,11 +9,7 @@ trigger:
 pool: Default
 
 steps:
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: '$(Agent.BuildDirectory)/s/config'
-    Contents: '**'
-    TargetFolder: '/var/www'
+
 - task: DockerCompose@0
   inputs:
     containerregistrytype: 'Container Registry'
